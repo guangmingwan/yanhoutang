@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <potato_pdf>
+            <general>
+                <is_enabled>0</is_enabled>
+                <lib_path>wkhtmltopdf</lib_path>
+                <additional_options>--javascript-delay 1000 --viewport-size 1280x1024</additional_options>
+            </general>
+            <advanced>
+                <page_orientation>Portrait</page_orientation>
+                <page_format>A4</page_format>
+                <margin_bottom>25</margin_bottom>
+                <margin_left>18</margin_left>
+                <margin_top>25</margin_top>
+                <margin_right>18</margin_right>
+            </advanced>
+        </potato_pdf>
+    </default>
+</config>

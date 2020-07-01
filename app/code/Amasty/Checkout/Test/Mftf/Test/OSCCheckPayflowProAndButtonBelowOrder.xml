@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OSCCheckPayflowProAndButtonBelowOrder">
+        <annotations>
+            <features value="Customize Checkout via admin"/>
+            <stories value="Check Place Order With Payflow Pro via the storefront"/>
+            <title value="Check Place Order with Payflow Pro And Button Below Order Methods on the Checkout"/>
+            <description value="Check Place Order with Payflow Pro And Button Below Order Methods on the Checkout"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="OSC-MFTF-31"/>
+            <group value="OSCCheckExternalPayments"/>
+            <group value="OSCCheckExternalPaymentsPayflowPro"/>
+        </annotations>
+
+        <before>
+            <!-- Login as admin -->
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin1"/>
+            <!-- Configuration setting -->
+            <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurateGeneralSetting">
+                <argument name="adminSettingOSCGeneral" value="SetOnlyEnableCheckout"/>
+            </actionGroup>
+            <actionGroup ref="AdminConfigurationSettingOSCPlaceButtonDesign" stepKey="ConfiguratePlaceButtonDesignSetting">
+                <argument name="adminSettingOSCPlaceButtonDesign" value="BelowTheOrderTotalAndTurquoise"/>
+            </actionGroup>
+            <!-- Activate Payment Method -->
+            <actionGroup ref="AdminActivatePayfloyProPayment" stepKey="ActivatePayflowPro">
+                <argument name="paymentMethodsAccess" value="paymentMethodCredentialsPayflowPro"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Return default setting -->
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGeneral" stepKey="ReturnDefaultGeneralSetting"/>
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCPlaceButtonDesign" stepKey="ReturnDefaultPlaceButtonDesignSetting"/>
+            <actionGroup ref="AdminReturnDefaultSettingPayflowProPayment" stepKey="ReturnDefaultPaymentSetting"/>
+            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+        </after>
+
+        <!--Add First Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddFirstProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theBagImpulseDuffleData"/>
+        </actionGroup>
+
+        <!--Add Second Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddSecondProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theFitnessHarmonyLumaflex"/>
+        </actionGroup>
+
+        <actionGroup ref="GoToOSCAsGuestAndChooseShipping" stepKey="NavigateToOneStepCheckout">
+            <argument name="customer" value="customerOSCCheckPayPalAndBraintree"/>
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+
+        <!-- Check Payment method -->
+        <actionGroup ref="StorefrontOSCCheckPaymentMethod" stepKey="checkHavePayPalExpressCheckout">
+            <argument name="paymentMethods" value="paymentPayflowPro"/>
+        </actionGroup>
+
+        <!-- Check totals -->
+        <actionGroup ref="StorefrontOSCCheckTotalsAndShippingPrice" stepKey="checkTotalsAndShipping">
+            <argument name="oneStepCheckoutData" value="OSCCheckPayflowProAndButtonBelowOrder"/>
+        </actionGroup>
+
+        <!-- Place Order -->
+        <actionGroup ref="StorefrontOSCPlaceOrderBelowOrderWithPayflowPro" stepKey="PlaceOrderWitPayflow">
+            <argument name="creditCard" value="creditCardVisa"/>
+        </actionGroup>
+
+        <!-- Check Payment method in order-->
+        <actionGroup ref="AdminCheckPaymentMethodInLastOrder" stepKey="checkPaymentInAdminOrder">
+            <argument name="paymentMethods" value="paymentPayflowPro"/>
+        </actionGroup>
+
+        <!-- Check totals in order-->
+        <actionGroup ref="AdminCheckTotalsInLastOrder" stepKey="CheckTotalsInAdminOrder">
+            <argument name="subtotal" value="OSCCheckPayflowProAndButtonBelowOrder.cartSubtotal"/>
+            <argument name="grandTotal" value="OSCCheckPayflowProAndButtonBelowOrder.orderTotal"/>
+        </actionGroup>
+
+    </test>
+</tests>

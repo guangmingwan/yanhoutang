@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OSCConfigurationAllowGiftMessagesOnItems">
+        <annotations>
+            <features value="Customize Checkout via admin"/>
+            <stories value="Check Setting Allow Gift Messages For Order Items"/>
+            <title value="Check Gift Messages"/>
+            <description value="Check Setting Allow Gift Messages For Order Items and Place Order With Message"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="OSC-MFTF-26"/>
+            <group value="Amasty"/>
+            <group value="OSC"/>
+            <group value="Checkout"/>
+            <group value="OSCConfiguration"/>
+            <group value="OSCConfigurationGifts"/>
+        </annotations>
+
+        <before>
+            <!-- Login as admin -->
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin1"/>
+            <!-- Configuration setting -->
+            <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurateGeneralSetting">
+                <argument name="adminSettingOSCGeneral" value="SetOnlyEnableCheckout"/>
+            </actionGroup>
+            <actionGroup ref="AdminConfigurationSettingOSCGifts" stepKey="ConfigurationGiftsSetting">
+                <argument name="adminSettingOSCGifts" value="SetAllowGiftMessagesOnlyForOrderItems"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Return default setting -->
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGeneral" stepKey="ReturnDefaultGeneralSetting"/>
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGifts" stepKey="ReturnDefaultGiftsSetting"/>
+            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+        </after>
+
+        <!--Add First Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddFirstProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theBagImpulseDuffleData"/>
+        </actionGroup>
+
+        <!--Add Second Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddSecondProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theBagWayfarerMessenger"/>
+        </actionGroup>
+
+        <!-- Go To Checkout -->
+        <actionGroup ref="GoToOSCAsGuestAndChooseShipping" stepKey="NavigateToOneStepCheckout">
+            <argument name="customer" value="defaultCustomerOSCData"/>
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+
+        <!-- Check Gift Options on OSC -->
+        <actionGroup ref="StorefrontOSCCheckHaveGiftMessageCheckbox" stepKey="checkHaveAddMessageCheckbox"/>
+        <actionGroup ref="StorefrontOSCCheckNoGiftMessageForOrder" stepKey="checkGiftMessageForOrder"/>
+        <actionGroup ref="StorefrontOSCCheckHaveGiftMessageForItems" stepKey="CheckHaveGiftMessageForFirstProduct">
+            <argument name="products" value="_theBagImpulseDuffleData"/>
+        </actionGroup>
+        <actionGroup ref="StorefrontOSCCheckHaveGiftMessageForItems" stepKey="CheckHaveGiftMessageForSecondProduct">
+            <argument name="products" value="_theBagWayfarerMessenger"/>
+        </actionGroup>
+
+        <!-- Fill Gift Options on OSC -->
+        <actionGroup ref="StorefrontOSCFillGiftMessageForItem" stepKey="fillGiftMessageForItemOne">
+            <argument name="OSCGiftMessageForItemData" value="giftMessageForItemOSCImpulseDuffle"/>
+            <argument name="products" value="_theBagImpulseDuffleData"/>
+        </actionGroup>
+        <actionGroup ref="StorefrontOSCFillGiftMessageForItem" stepKey="fillGiftMessageForItemTwo">
+            <argument name="OSCGiftMessageForItemData" value="giftMessageForItemOSCWayfarerMessenger"/>
+            <argument name="products" value="_theBagWayfarerMessenger"/>
+        </actionGroup>
+
+        <!-- Place Order -->
+        <actionGroup ref="StorefrontOSCPlaceOrderBelowOrderWithCheckMoney" stepKey="PlaceOrderWithCheckMoney"/>
+
+        <!-- Check Gift Message in admin area order-->
+        <actionGroup ref="AdminCheckGiftMessageForItemInLastOrder" stepKey="checkMessageFirstProductInOrder">
+            <argument name="OSCGiftMessageForItemData" value="giftMessageForItemOSCImpulseDuffle"/>
+            <argument name="products" value="_theBagImpulseDuffleData"/>
+        </actionGroup>
+        <actionGroup ref="AdminCheckGiftMessageForItemInLastOrder" stepKey="checkMessageSecondProductInOrder">
+            <argument name="OSCGiftMessageForItemData" value="giftMessageForItemOSCWayfarerMessenger"/>
+            <argument name="products" value="_theBagWayfarerMessenger"/>
+        </actionGroup>
+
+        <!-- Check totals in admin area order-->
+        <actionGroup ref="AdminCheckTotalsInLastOrder" stepKey="CheckTotalsInAdminOrder">
+            <argument name="subtotal" value="OSCConfigurationCheckGiftMessages.cartSubtotal"/>
+            <argument name="grandTotal" value="OSCConfigurationCheckGiftMessages.orderTotal"/>
+        </actionGroup>
+
+    </test>
+</tests>

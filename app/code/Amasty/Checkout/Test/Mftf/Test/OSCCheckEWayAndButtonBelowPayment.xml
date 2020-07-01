@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OSCCheckEWayAndButtonBelowPayment">
+        <annotations>
+            <features value="Customize Checkout via admin"/>
+            <stories value="Check Place Order With eWay via the storefront"/>
+            <title value="Check Place Order with eWay And Button Below the Payment Methods on the Checkout"/>
+            <description value="Check Place Order with eWay And Button Below the Payment Methods on the Checkout"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="OSC-MFTF-42"/>
+            <group value="OSCCheckExternalPayments"/>
+            <group value="OSCCheckExternalPaymentsEWay"/>
+        </annotations>
+
+        <before>
+            <!-- Login as admin -->
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin1"/>
+            <!-- Configuration setting -->
+            <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurateGeneralSetting">
+                <argument name="adminSettingOSCGeneral" value="SetOnlyEnableCheckout"/>
+            </actionGroup>
+            <actionGroup ref="AdminConfigurationSettingOSCPlaceButtonDesign" stepKey="ConfiguratePlaceButtonDesignSetting">
+                <argument name="adminSettingOSCPlaceButtonDesign" value="BelowTheSelectedPaymentMethodAndRed"/>
+            </actionGroup>
+            <actionGroup ref="AdminChooseCurrenciesAndChangeBaseCurrency" stepKey="configureCurrencies">
+                <argument name="currenciesConfigurations" value="_CurrencySet_USD_AUD"/>
+                <argument name="baseCurrency" value="_AustralianDollar.currencyCode"/>
+            </actionGroup>
+            <!-- Activate Payment Method -->
+            <actionGroup ref="AdminActivateEWayPayment" stepKey="ActivateEWayPayment">
+                <argument name="paymentMethodsAccess" value="paymentMethodCredentialsEWay"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Return default setting -->
+            <actionGroup ref="AdminReturnDefaultCurrencyAndBaseCurrency" stepKey="ReturnDefaultSettingCurrencies"/>
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGeneral" stepKey="ReturnDefaultGeneralSetting"/>
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCPlaceButtonDesign" stepKey="ReturnDefaultPlaceButtonDesignSetting"/>
+            <actionGroup ref="AdminReturnDefaultSettingEWayPayment" stepKey="ReturnDefaultPaymentSetting"/>
+            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+        </after>
+
+        <!--Add First Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddFirstProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theBagFusionBackpack"/>
+        </actionGroup>
+
+        <!--Add Second Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddSecondProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theFitnessSpriteFoamYogaBrick"/>
+        </actionGroup>
+
+        <actionGroup ref="GoToOSCAsGuestAndChooseShipping" stepKey="NavigateToOneStepCheckout">
+            <argument name="customer" value="customerOSCCheckEWay"/>
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+
+        <!-- Check Payment method -->
+        <actionGroup ref="StorefrontOSCCheckPaymentMethod" stepKey="checkHaveBraintree">
+            <argument name="paymentMethods" value="paymentEWay"/>
+        </actionGroup>
+
+        <!-- Check totals -->
+        <actionGroup ref="StorefrontOSCCheckTotalsAndShippingPrice" stepKey="checkTotalsAndShipping">
+            <argument name="oneStepCheckoutData" value="OSCCheckEWayAndButtonBelowPayment"/>
+        </actionGroup>
+
+        <!-- Place Order -->
+        <actionGroup ref="StorefrontOSCPlaceOrderBelowPaymentWithEWay" stepKey="PlaceOrder">
+            <argument name="creditCard" value="creditCardVisaTwo"/>
+        </actionGroup>
+
+        <!-- Check Payment method in order-->
+        <actionGroup ref="AdminCheckPaymentMethodInLastOrder" stepKey="checkPaymentInAdminOrder">
+            <argument name="paymentMethods" value="paymentEWay"/>
+        </actionGroup>
+
+        <!-- Check totals in order-->
+        <actionGroup ref="AdminCheckTotalsInLastOrder" stepKey="CheckTotalsInAdminOrder">
+            <argument name="subtotal" value="OSCCheckEWayAndButtonBelowPayment.cartSubtotal"/>
+            <argument name="grandTotal" value="OSCCheckEWayAndButtonBelowPayment.orderTotal"/>
+        </actionGroup>
+
+    </test>
+</tests>

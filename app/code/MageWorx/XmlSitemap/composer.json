@@ -1,0 +1,23 @@
+{
+    "name": "mageworx/module-xmlsitemap",
+    "description": "XML sitemap module for Magento 2",
+    "require": {
+        "mageworx/module-seoall"            : ">=2.8.2",
+        "magento/module-catalog"            : ">=102.0.0 <104",
+        "magento/module-cms"                : ">=102.0.0 <104",
+        "magento/module-sitemap"            : ">=100.2.2 <101",
+        "magento/framework"                 : ">=101.0.0 <103"
+    },
+    "type": "magento2-module",
+    "version": "3.0.3",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "MageWorx\\XmlSitemap\\": ""
+        }
+    }
+}

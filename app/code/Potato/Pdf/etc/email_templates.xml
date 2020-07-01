@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="potato_pdf_order_admin_template" label="Order To Admin" file="po_pdf_order_admin_template.html" type="html" module="Potato_Pdf" area="frontend"/>
+    <template id="potato_pdf_invoice_admin_template" label="Invoice To Admin" file="po_pdf_invoice_admin_template.html" type="html" module="Potato_Pdf" area="frontend"/>
+    <template id="potato_pdf_shipment_admin_template" label="Shipment To Admin" file="po_pdf_shipment_admin_template.html" type="html" module="Potato_Pdf" area="frontend"/>
+    <template id="potato_pdf_creditmemo_admin_template" label="Credit Memo To Admin" file="po_pdf_creditmemo_admin_template.html" type="html" module="Potato_Pdf" area="frontend"/>
+    <template id="potato_pdf_order_customer_template" label="Order To Customer" file="po_pdf_order_customer_template.html" type="html" module="Potato_Pdf" area="frontend"/>
+    <template id="potato_pdf_invoice_customer_template" label="Invoice To Customer" file="po_pdf_invoice_customer_template.html" type="html" module="Potato_Pdf" area="frontend"/>
+    <template id="potato_pdf_shipment_customer_template" label="Shipment To Customer" file="po_pdf_shipment_customer_template.html" type="html" module="Potato_Pdf" area="frontend"/>
+    <template id="potato_pdf_creditmemo_customer_template" label="Credit Memo To Customer" file="po_pdf_creditmemo_customer_template.html" type="html" module="Potato_Pdf" area="frontend"/>
+</config>

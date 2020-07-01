@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <!-- Action Groups For Configuration OSC General Setting -->
+    <actionGroup name="AdminConfigurationSettingOSCGeneral">
+        <arguments>
+            <argument name="adminSettingOSCGeneral"/>
+        </arguments>
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <conditionalClick stepKey="openOSCGeneralTab"
+                          selector="{{AdminConfigurationsOSCSection.GeneralTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.GeneralTabOpen}}"
+                          visible="false"/>
+        <waitForElementVisible selector="{{AdminConfigurationsOSCSection.EnableOneStepCheckout}}"
+                               stepKey="waitForGeneralTabisOpened"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.EnableOneStepCheckout}}"
+                      userInput="{{adminSettingOSCGeneral.EnableOneStepCheckout}}"
+                      stepKey="SelectOptionEnable"/>
+        <uncheckOption selector="{{AdminConfigurationsOSCSection.AllowGuestCheckoutUseSystemValue}}"
+                       stepKey="uncheckUseSystemValue1"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.AllowGuestCheckout}}"
+                      userInput="{{adminSettingOSCGeneral.AllowGuestCheckout}}"
+                      stepKey="SelectOptionAllowGuest"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.CheckoutPageTitle}}"
+                   userInput="{{adminSettingOSCGeneral.CheckoutPageTitle}}"
+                   stepKey="enterCheckoutPageTitle"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.CheckoutPageDescription}}"
+                   userInput="{{adminSettingOSCGeneral.CheckoutPageDescription}}"
+                   stepKey="enterCheckoutPageDescription"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.AllowToEditProductsInTheOrderSummary}}"
+                      userInput="{{adminSettingOSCGeneral.AllowToEditProductsInTheOrderSummary}}"
+                      stepKey="SelectOptionAllowToEditProduct"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.ReloadShippingMethodsWhenCouponCodeIsApplied}}"
+                      userInput="{{adminSettingOSCGeneral.ReloadShippingMethodsWhenCouponCodeIsApplied}}"
+                      stepKey="SelectOptionReloadShipping"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+    </actionGroup>
+
+    <actionGroup name="AdminDefaultConfigurationSettingOSCGeneral">
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <conditionalClick stepKey="openOSCGeneralTab"
+                          selector="{{AdminConfigurationsOSCSection.GeneralTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.GeneralTabOpen}}"
+                          visible="false"/>
+        <waitForElementVisible selector="{{AdminConfigurationsOSCSection.EnableOneStepCheckout}}"
+                               stepKey="waitForGeneralTabisOpened"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.EnableOneStepCheckout}}"
+                      userInput="1" stepKey="SelectDefaultOptionEnable"/>
+        <uncheckOption selector="{{AdminConfigurationsOSCSection.AllowGuestCheckoutUseSystemValue}}"
+                       stepKey="uncheckUseSystemValue1"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.AllowGuestCheckout}}"
+                      userInput="1" stepKey="SelectDefaultOptionAllowGuest"/>
+        <wait time="1" stepKey="waitForCheckUseSystem"/>
+        <checkOption selector="{{AdminConfigurationsOSCSection.AllowGuestCheckoutUseSystemValue}}"
+                     stepKey="checkUseSystemValue1"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.CheckoutPageTitle}}"
+                   userInput="Checkout" stepKey="enterDefaultCheckoutPageTitle"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.CheckoutPageDescription}}"
+                   userInput="Please enter your details below to complete your purchase"
+                   stepKey="enterDefaultCheckoutPageDescription"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.AllowToEditProductsInTheOrderSummary}}"
+                      userInput="0" stepKey="SelectDefaultOptionAllowToEditProduct"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.ReloadShippingMethodsWhenCouponCodeIsApplied}}"
+                      userInput="0" stepKey="SelectDefaultOptionReloadShipping"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+    </actionGroup>
+
+    <actionGroup name="AdminConfigurationSettingOSCGeneralDeleteTitle">
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <conditionalClick stepKey="openOSCGeneralTab"
+                          selector="{{AdminConfigurationsOSCSection.GeneralTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.GeneralTabOpen}}"
+                          visible="false"/>
+        <waitForElementVisible selector="{{AdminConfigurationsOSCSection.EnableOneStepCheckout}}"
+                               stepKey="waitForGeneralTabisOpened"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.CheckoutPageTitle}}"
+                    stepKey="deleteTitle"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
+    </actionGroup>
+
+    <actionGroup name="AdminConfigurationSettingOSCGeneralDeleteDescription">
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <conditionalClick stepKey="openOSCGeneralTab"
+                          selector="{{AdminConfigurationsOSCSection.GeneralTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.GeneralTabOpen}}"
+                          visible="false"/>
+        <waitForElementVisible selector="{{AdminConfigurationsOSCSection.EnableOneStepCheckout}}"
+                               stepKey="waitForGeneralTabisOpened"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.CheckoutPageDescription}}"
+                    stepKey="deleteDescription"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
+    </actionGroup>
+
+
+    <!-- Action Groups For Configuration OSC Design Setting -->
+    <actionGroup name="AdminConfigurationSettingOSCDesignClassic">
+        <arguments>
+            <argument name="adminSettingOSCDesign"/>
+        </arguments>
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.DesignTab}}" stepKey="scrollToGeneralTab" />
+        <conditionalClick stepKey="openOSCDesignTab"
+                          selector="{{AdminConfigurationsOSCSection.DesignTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.DesignTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DisplayHeaderAndFooter}}"
+                      userInput="{{adminSettingOSCDesign.DisplayHeaderAndFooter}}"
+                      stepKey="SelectOptionDisplayHeaderAndFooter"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.CheckoutDesign}}"
+                      userInput="{{adminSettingOSCDesign.CheckoutDesign}}"
+                      stepKey="SelectOptionCheckoutDesign"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.CheckoutPageLayout}}"
+                      userInput="{{adminSettingOSCDesign.CheckoutPageLayout}}"
+                      stepKey="SelectOptionCheckoutPageLayout"/>
+        <uncheckOption selector="{{AdminConfigurationsOSCSection.NumberOfLinesUseSystemValue}}"
+                       stepKey="uncheckOptionNumberOfLines"/>
+        <wait time="1" stepKey="waitForUncheck"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.NumberOfLinesInAStreetAddress}}"
+                      userInput="{{adminSettingOSCDesign.NumberOfLinesInAStreetAddress}}"
+                      stepKey="SelectOptionNumberOfLinesInAStreetAddress"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DisplayBillingAddressOn}}"
+                      userInput="{{adminSettingOSCDesign.DisplayBillingAddressOn}}"
+                      stepKey="SelectOptionDisplayBillingAddressOn"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DisplayMultipleShippingAddressIn}}"
+                      userInput="{{adminSettingOSCDesign.DisplayMultipleShippingAddressIn}}"
+                      stepKey="SelectOptionDisplayMultipleShippingAddressIn"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+    </actionGroup>
+
+    <actionGroup name="AdminConfigurationSettingOSCDesignModern">
+        <arguments>
+            <argument name="adminSettingOSCDesign"/>
+        </arguments>
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.DesignTab}}" stepKey="scrollToGeneralTab" />
+        <conditionalClick stepKey="openOSCDesignTab"
+                          selector="{{AdminConfigurationsOSCSection.DesignTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.DesignTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DisplayHeaderAndFooter}}"
+                      userInput="{{adminSettingOSCDesign.DisplayHeaderAndFooter}}"
+                      stepKey="SelectOptionDisplayHeaderAndFooter"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.CheckoutDesign}}"
+                      userInput="{{adminSettingOSCDesign.CheckoutDesign}}"
+                      stepKey="SelectOptionCheckoutDesign"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.CheckoutPageLayoutModern}}"
+                      userInput="{{adminSettingOSCDesign.CheckoutPageLayout}}"
+                      stepKey="SelectOptionCheckoutPageLayout"/>
+        <uncheckOption selector="{{AdminConfigurationsOSCSection.NumberOfLinesUseSystemValue}}"
+                       stepKey="uncheckOptionNumberOfLines"/>
+        <wait time="1" stepKey="waitForUncheck"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.NumberOfLinesInAStreetAddress}}"
+                   userInput="{{adminSettingOSCDesign.NumberOfLinesInAStreetAddress}}"
+                   stepKey="SelectOptionNumberOfLinesInAStreetAddress"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DisplayBillingAddressOn}}"
+                      userInput="{{adminSettingOSCDesign.DisplayBillingAddressOn}}"
+                      stepKey="SelectOptionDisplayBillingAddressOn"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DisplayMultipleShippingAddressIn}}"
+                      userInput="{{adminSettingOSCDesign.DisplayMultipleShippingAddressIn}}"
+                      stepKey="SelectOptionDisplayMultipleShippingAddressIn"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+    </actionGroup>
+
+    <actionGroup name="AdminDefaultConfigurationSettingOSCDesign">
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.DesignTab}}" stepKey="scrollToGeneralTab" />
+        <conditionalClick stepKey="openOSCDesignTab"
+                          selector="{{AdminConfigurationsOSCSection.DesignTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.DesignTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DisplayHeaderAndFooter}}"
+                      userInput="0"
+                      stepKey="DefaultDisplayHeaderAndFooter"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.CheckoutDesign}}"
+                      userInput="0"
+                      stepKey="SelectOptionCheckoutDesign"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.CheckoutPageLayout}}"
+                      userInput="2columns"
+                      stepKey="DefaultCheckoutPageLayout"/>
+        <uncheckOption selector="{{AdminConfigurationsOSCSection.NumberOfLinesUseSystemValue}}"
+                       stepKey="uncheckOptionNumberOfLines"/>
+        <wait time="1" stepKey="waitForUncheck"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.NumberOfLinesInAStreetAddress}}"
+                      userInput="3"
+                      stepKey="DefaultNumberOfLinesInAStreetAddress"/>
+        <wait time="1" stepKey="waitForCheckOptionUseSystem"/>
+        <checkOption selector="{{AdminConfigurationsOSCSection.NumberOfLinesUseSystemValue}}"
+                       stepKey="checkOptionNumberOfLines"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DisplayBillingAddressOn}}"
+                      userInput="0"
+                      stepKey="DefaultDisplayBillingAddressOn"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DisplayMultipleShippingAddressIn}}"
+                      userInput="0"
+                      stepKey="DefaultDisplayMultipleShippingAddressIn"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+    </actionGroup>
+
+    <actionGroup name="AdminConfigurationSettingOSCPlaceButtonDesign">
+        <arguments>
+            <argument name="adminSettingOSCPlaceButtonDesign"/>
+        </arguments>
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.GeneralTab}}" stepKey="scrollToGeneralTab" />
+        <conditionalClick stepKey="openOSCDesignTab"
+                          selector="{{AdminConfigurationsOSCSection.DesignTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.DesignTabOpen}}"
+                          visible="false"/>
+        <conditionalClick stepKey="openOSCPlaceButtonDesignTab"
+                          selector="{{AdminConfigurationsOSCSection.PlaceButtonDesignTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.PlaceButtonDesignTabOpen}}"
+                          visible="false"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.PlaceOrderButtonColor}}"
+                   userInput="{{adminSettingOSCPlaceButtonDesign.PlaceOrderButtonColor}}"
+                   stepKey="enterPlaceOrderButtonColor"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.PlaceOrderButtonPosition}}"
+                      userInput="{{adminSettingOSCPlaceButtonDesign.PlaceOrderButtonPosition}}"
+                      stepKey="SelectOptionPlaceOrderButtonPosition"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+    </actionGroup>
+
+    <actionGroup name="AdminDefaultConfigurationSettingOSCPlaceButtonDesign">
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.GeneralTab}}" stepKey="scrollToGeneralTab" />
+        <conditionalClick stepKey="openOSCDesignTab"
+                          selector="{{AdminConfigurationsOSCSection.DesignTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.DesignTabOpen}}"
+                          visible="false"/>
+        <conditionalClick stepKey="openOSCPlaceButtonDesignTab"
+                          selector="{{AdminConfigurationsOSCSection.PlaceButtonDesignTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.PlaceButtonDesignTabOpen}}"
+                          visible="false"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.PlaceOrderButtonColor}}"
+                    stepKey="enterPlaceOrderButtonColor"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.PlaceOrderButtonPosition}}"
+                      userInput="Below the Order Total"
+                      stepKey="SelectOptionPlaceOrderButtonPosition"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+    </actionGroup>
+
+
+    <!-- Action Groups For Configuration OSC Default Values Setting -->
+    <actionGroup name="AdminConfigurationSettingOSCDefaultValues">
+        <arguments>
+            <argument name="adminSettingOSCDefaultValues"/>
+        </arguments>
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <conditionalClick stepKey="openOSCGeneralTab"
+                          selector="{{AdminConfigurationsOSCSection.DefaultValuesTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.DefaultValuesTabOpen}}"
+                          visible="false"/>
+        <waitForElementVisible selector="{{AdminConfigurationsOSCSection.DefaultShippingMethod}}"
+                               stepKey="waitForDefaultValuesTabisOpened"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DefaultShippingMethod}}"
+                      userInput="{{adminSettingOSCDefaultValues.DefaultShippingMethod}}"
+                      stepKey="selectDefaultShippingMethod"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DefaultPaymentMethod}}"
+                      userInput="{{adminSettingOSCDefaultValues.DefaultPaymentMethod}}"
+                      stepKey="selectDefaultPaymentMethod"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DefaultCountry}}"
+                      userInput="{{adminSettingOSCDefaultValues.DefaultCountry}}"
+                      stepKey="selectDefaultCountry"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DefaultRegion}}"
+                   userInput="{{adminSettingOSCDefaultValues.DefaultRegion}}"
+                   stepKey="enterCheckoutDefaultRegion"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.DefaultPostalCode}}"
+                   userInput="{{adminSettingOSCDefaultValues.DefaultPostalCode}}"
+                   stepKey="enterCheckoutDefaultPostalCode"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.DefaultCity}}"
+                   userInput="{{adminSettingOSCDefaultValues.DefaultCity}}"
+                   stepKey="enterCheckoutDefaultCity"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad3"/>
+    </actionGroup>
+
+    <actionGroup name="AdminDefaultConfigurationSettingOSCDefaultValues">
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <conditionalClick stepKey="openOSCGeneralTab"
+                          selector="{{AdminConfigurationsOSCSection.DefaultValuesTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.DefaultValuesTabOpen}}"
+                          visible="false"/>
+        <waitForElementVisible selector="{{AdminConfigurationsOSCSection.DefaultShippingMethod}}"
+                               stepKey="waitForDefaultValuesTabisOpened"/>
+        <click selector="//select[@id='amasty_checkout_default_values_shipping_method']/option[1]" stepKey="selectDefaultShippingMethod"/>
+        <click selector="//select[@id='amasty_checkout_default_values_payment_method']/option[1]" stepKey="selectDefaultPaymentMethod"/>
+        <click selector="//select[@id='amasty_checkout_default_values_address_country_id']/option[text()='--Please Select--']" stepKey="enterNoDefaultCountry"/>
+        <waitForPageLoad time="50"  stepKey="waitForPageLoadForClear"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.DefaultRegion}}"
+                    stepKey="enterNoDefaultRegion"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.DefaultPostalCode}}"
+                    stepKey="enterNoDefaultPostalCode"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.DefaultCity}}"
+                    stepKey="enterNoDefaultCity"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveSettings"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+    </actionGroup>
+
+
+    <!-- Action Group For Configuration OSC Gifts Setting -->
+    <actionGroup name="AdminConfigurationSettingOSCGifts">
+        <arguments>
+            <argument name="adminSettingOSCGifts"/>
+        </arguments>
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.GiftsTab}}" stepKey="scrollToGiftsTab" />
+        <conditionalClick stepKey="openOSCGiftsTab"
+                          selector="{{AdminConfigurationsOSCSection.GiftsTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.GiftsTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.AllowGiftMessagesOnOrderLevel}}"
+                      userInput="{{adminSettingOSCGifts.AllowGiftMessagesOnOrderLevel}}"
+                      stepKey="SelectOptionAllowGiftMessagesOnOrderLevel"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.AllowGiftMessagesOnOrderItems}}"
+                      userInput="{{adminSettingOSCGifts.AllowGiftMessagesOnOrderItems}}"
+                      stepKey="SelectOptionAllowGiftMessagesOnOrderItems"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="SaveChangeSettingGiftMessage"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
+    </actionGroup>
+
+    <actionGroup name="AdminConfigurationSettingOSCGiftsWithGiftWrap" extends="AdminConfigurationSettingOSCGifts">
+        <arguments>
+            <argument name="giftWrapFeeValue"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.GiftsTab}}" stepKey="scrollToGiftsTab" />
+        <conditionalClick stepKey="openOSCGiftsTab"
+                          selector="{{AdminConfigurationsOSCSection.GiftsTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.GiftsTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.GiftWrap}}"
+                      userInput="1"
+                      stepKey="SelectYesGiftWrap"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.GiftWrapFee}}"
+                   userInput="{{giftWrapFeeValue}}"
+                   stepKey="FillGiftWrapFeeValue"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="SaveChangeSettingGiftWrap"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+    <actionGroup name="AdminDefaultConfigurationSettingOSCGifts">
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.GiftsTab}}" stepKey="scrollToGiftsTab1" />
+        <conditionalClick stepKey="openOSCGiftsTab1"
+                          selector="{{AdminConfigurationsOSCSection.GiftsTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.GiftsTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.GiftWrap}}"
+                      userInput="1"
+                      stepKey="EnableForCleanField"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.GiftWrapFee}}"
+                    stepKey="clearGiftWrapFeeValue"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveForClearFieldGiftWrap"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.GiftsTab}}" stepKey="scrollToGiftsTab2"/>
+        <conditionalClick stepKey="openOSCGiftsTab2"
+                          selector="{{AdminConfigurationsOSCSection.GiftsTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.GiftsTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.AllowGiftMessagesOnOrderLevel}}"
+                      userInput="0"
+                      stepKey="DisableOptionAllowGiftMessagesOnOrderLevel"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.AllowGiftMessagesOnOrderItems}}"
+                      userInput="0"
+                      stepKey="DisableOptionAllowGiftMessagesOnOrderItems"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.GiftWrap}}"
+                      userInput="0"
+                      stepKey="DisableOptionGiftWrap"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="saveDefaultConfig"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
+    </actionGroup>
+
+
+    <!-- Action Groups For Configuration OSC Additional Options Setting -->
+    <actionGroup name="AdminConfigurationSettingOSCAdditionalMain">
+        <arguments>
+            <argument name="adminSettingOSCAdditionalMain"/>
+        </arguments>
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.AdditionalOptionsTab}}" stepKey="scrollToAdditionalOptionsTab1"/>
+        <conditionalClick stepKey="openOSCAdditionalOptionsTab"
+                          selector="{{AdminConfigurationsOSCSection.AdditionalOptionsTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.AdditionalOptionsTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.OrderComment}}"
+                      userInput="{{adminSettingOSCAdditionalMain.OrderComment}}"
+                      stepKey="SelectOptionOrderComment"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DiscountField}}"
+                      userInput="{{adminSettingOSCAdditionalMain.DiscountField}}"
+                      stepKey="SelectOptionDiscountField"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.LetCustomersCreateAccountAtCheckout}}"
+                      userInput="{{adminSettingOSCAdditionalMain.LetCustomersCreateAccountAtCheckout}}"
+                      stepKey="SelectOptionLetCustomersCreateAccountAtCheckout"/>
+        <uncheckOption selector="{{AdminConfigurationsOSCSection.ShowTaxVATNumberSystemValue}}"
+                       stepKey="uncheckUseSystemValueShowTaxVATNumber"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.ShowTaxVATNumber}}"
+                      userInput="{{adminSettingOSCAdditionalMain.ShowTaxVATNumber}}"
+                      stepKey="SelectOptionShowTaxVATNumber"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="SaveChangeSettingAdditionalMain"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
+    </actionGroup>
+
+    <actionGroup name="AdminConfigurationSettingOSCAdditionalNewsletter" extends="AdminConfigurationSettingOSCAdditionalMain">
+        <arguments>
+            <argument name="adminSettingOSCAdditionalNewsletter"/>
+        </arguments>
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.AdditionalOptionsTab}}" stepKey="scrollToAdditionalOptionsTab2"/>
+        <conditionalClick stepKey="openOSCAdditionalOptionsTab"
+                          selector="{{AdminConfigurationsOSCSection.AdditionalOptionsTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.AdditionalOptionsTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.NewsletterCheckbox}}"
+                      userInput="1"
+                      stepKey="SelectOptionNewsletterCheckbox"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.NewsletterIsCheckedByDefault}}"
+                      userInput="{{adminSettingOSCAdditionalNewsletter.NewsletterIsCheckedByDefault}}"
+                      stepKey="SelectOptionNewsletterIsCheckedByDefault"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="SaveChangeSettingAdditionalNewsletter"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
+    </actionGroup>
+
+    <actionGroup name="AdminConfigurationSettingOSCAdditionalTermsAndConditions" extends="AdminConfigurationSettingOSCAdditionalMain">
+        <arguments>
+            <argument name="adminSettingOSCAdditionalTermsAndConditions"/>
+        </arguments>
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.AdditionalOptionsTab}}" stepKey="scrollToAdditionalOptionsTab2"/>
+        <conditionalClick stepKey="openOSCAdditionalOptionsTab"
+                          selector="{{AdminConfigurationsOSCSection.AdditionalOptionsTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.AdditionalOptionsTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.EnableTermsAndConditions}}"
+                      userInput="1"
+                      stepKey="SelectOptionEnableTermsAndConditions"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.TermsAndConditionsCheckboxPositioning}}"
+                      userInput="{{adminSettingOSCAdditionalTermsAndConditions.TermsAndConditionsCheckboxPositioning}}"
+                      stepKey="SelectOptionTermsAndConditionsCheckboxPositioning"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="SaveChangeSettingAdditionalNewsletter"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
+    </actionGroup>
+
+    <actionGroup name="AdminDefaultConfigurationSettingOSCAdditional">
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.AdditionalOptionsTab}}" stepKey="scrollToAdditionalOptionsTab1"/>
+        <conditionalClick stepKey="openOSCAdditionalOptionsTab"
+                          selector="{{AdminConfigurationsOSCSection.AdditionalOptionsTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.AdditionalOptionsTabOpen}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.OrderComment}}" userInput="0"
+                      stepKey="DisableOptionOrderComment"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.DiscountField}}" userInput="1"
+                      stepKey="EnableOptionDiscountField"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.NewsletterCheckbox}}" userInput="1"
+                      stepKey="SelectOptionNewsletterCheckboxForDisableDefaultChecked"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.NewsletterIsCheckedByDefault}}" userInput="0"
+                      stepKey="SelectOptionNewsletterIsCheckedByDefault"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.NewsletterCheckbox}}" userInput="0"
+                      stepKey="DisableOptionNewsletterCheckbox"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.LetCustomersCreateAccountAtCheckout}}" userInput="0"
+                      stepKey="DisableLetCustomersCreateAccountAtCheckout"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.ShowTaxVATNumber}}" userInput="0"
+                      stepKey="DisableShowTaxVATNumber"/>
+        <wait time="1" stepKey="waitForCheckOptionUseSystem"/>
+        <checkOption selector="{{AdminConfigurationsOSCSection.ShowTaxVATNumberSystemValue}}"
+                     stepKey="checkUseSystemValueShowTaxVATNumber"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.EnableTermsAndConditions}}" userInput="1"
+                      stepKey="EnableTermsAndConditionsForDisableDefaultChecked"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.TermsAndConditionsCheckboxPositioning}}"
+                      userInput="payment_method"
+                      stepKey="DefaultTermsAndConditionsCheckboxPositioning"/>
+        <selectOption selector="{{AdminConfigurationsOSCSection.EnableTermsAndConditions}}" userInput="0"
+                      stepKey="DisableTermsAndConditionsForDisableDefaultChecked"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="SaveChangeSettingAdditionalMain"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
+    </actionGroup>
+
+
+    <!-- Action Group For Configuration OSC Block Names Setting -->
+    <actionGroup name="AdminConfigurationSettingOSCBlockNames">
+        <arguments>
+            <argument name="adminSettingOSCBlockNames"/>
+        </arguments>
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.DefaultValuesTab}}" stepKey="scrollToNamesBlockTab"/>
+        <conditionalClick stepKey="openOSCNamesBlockTab"
+                          selector="{{AdminConfigurationsOSCSection.NamesBlockTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.NamesBlockTabOpen}}"
+                          visible="false"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.ShippingAddress}}"
+                   userInput="{{adminSettingOSCBlockNames.ShippingAddress}}" stepKey="enterValueForShippingAddress"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.ShippingMethod}}"
+                   userInput="{{adminSettingOSCBlockNames.ShippingMethod}}" stepKey="enterValueForShippingMethod"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.PaymentMethod}}"
+                   userInput="{{adminSettingOSCBlockNames.PaymentMethod}}" stepKey="enterValueForPaymentMethod"/>
+        <fillField selector="{{AdminConfigurationsOSCSection.OrderSummary}}"
+                   userInput="{{adminSettingOSCBlockNames.OrderSummary}}" stepKey="enterValueForOrderSummary"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="clickSaveButton"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterSave"/>
+    </actionGroup>
+
+    <actionGroup name="AdminDefaultConfigurationSettingOSCBlockNames">
+        <amOnPage url="{{AdminOSCConfigurationPage.url}}" stepKey="navigateAdminOSCConfiguration"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <scrollTo selector="{{AdminConfigurationsOSCSection.DefaultValuesTab}}" stepKey="scrollToNamesBlockTab"/>
+        <conditionalClick stepKey="openOSCNamesBlockTab"
+                          selector="{{AdminConfigurationsOSCSection.NamesBlockTab}}"
+                          dependentSelector="{{AdminConfigurationsOSCSection.NamesBlockTabOpen}}"
+                          visible="false"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.ShippingAddress}}"
+                    stepKey="clearValueForShippingAddress"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.ShippingMethod}}"
+                    stepKey="clearValueForShippingMethod"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.PaymentMethod}}"
+                    stepKey="clearValueForPaymentMethod"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.Delivery}}"
+                    stepKey="clearValueForDelivery"/>
+        <clearField selector="{{AdminConfigurationsOSCSection.OrderSummary}}"
+                    stepKey="clearValueForOrderSummary"/>
+        <click selector="{{AdminConfigurationsOSCSection.Save}}" stepKey="clickSaveButton"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterSave"/>
+    </actionGroup>
+
+
+    <!-- Action Groups For Configuration Base Currencies -->
+    <actionGroup name="AdminChooseCurrenciesAndChangeBaseCurrency" extends="ChooseCurrencyInConfigurations">
+        <arguments>
+            <argument name="baseCurrency"/>
+        </arguments>
+        <waitForPageLoad time="30" stepKey="waitForPageLoadAfterChoosingCurrencies"/>
+        <selectOption selector="{{AdminConfigurationsCurrencySection.BaseCurrency}}"
+                      userInput="{{baseCurrency}}"
+                      stepKey="selectBaseCurrency"/>
+        <click selector="{{AdminConfigurationsAllSection.Save}}" stepKey="saveChangeWithBaseCurrency"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad3"/>
+    </actionGroup>
+
+    <actionGroup name="AdminReturnDefaultCurrencyAndBaseCurrency" extends="ChooseDefaultCurrencyInConfigurations">
+        <waitForPageLoad time="30" stepKey="waitForPageLoadAfterChoosingCurrencies"/>
+        <selectOption selector="{{AdminConfigurationsCurrencySection.BaseCurrency}}"
+                      userInput="USD"
+                      stepKey="selectBaseCurrencyUSD"/>
+        <click selector="{{AdminConfigurationsAllSection.Save}}" stepKey="saveChangeWithBaseCurrency"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad3"/>
+        <magentoCLI command="indexer:reindex" stepKey="reindexForMessage"/>
+        <magentoCLI command="cache:flush" stepKey="flushCache"/>
+    </actionGroup>
+
+
+    <!-- Action Groups For Create And Delete Sore Terms And Condition -->
+    <actionGroup name="AdminCreateStoresTermsAndConditionsRule">
+        <arguments>
+            <argument name="termsAndConditionsData"/>
+        </arguments>
+        <amOnPage url="{{AdminStoresTermsAndConditionsPage.url}}" stepKey="amOnTermsAndConditionList"/>
+        <waitForPageLoad stepKey="waitForConditionList"/>
+        <click selector="{{AdminStoresTermsAndConditionsSection.AddNewConditionsButton}}"
+               stepKey="clickAddNewConditions"/>
+        <waitForPageLoad stepKey="waitForLoadCreateConditionPage"/>
+        <fillField selector="{{AdminStoresTermsAndConditionsSection.ConditionName}}"
+                   userInput="{{termsAndConditionsData.name}}" stepKey="fillConditionName"/>
+        <selectOption selector="{{AdminStoresTermsAndConditionsSection.Status}}"
+                      userInput="{{termsAndConditionsData.status}}" stepKey="enableCondition"/>
+        <selectOption selector="{{AdminStoresTermsAndConditionsSection.ShowContextAs}}"
+                      userInput="{{termsAndConditionsData.showContextAs}}" stepKey="selectShowContext"/>
+        <selectOption selector="{{AdminStoresTermsAndConditionsSection.Applied}}"
+                      userInput="{{termsAndConditionsData.applied}}" stepKey="selectApplied"/>
+        <selectOption selector="{{AdminStoresTermsAndConditionsSection.StoreViewSelect}}"
+                      parameterArray="[{{termsAndConditionsData.storeView}}]" stepKey="selectStoreView"/>
+        <fillField selector="{{AdminStoresTermsAndConditionsSection.CheckboxText}}"
+                   userInput="{{termsAndConditionsData.checkboxText}}" stepKey="fillCheckboxText"/>
+        <fillField selector="{{AdminStoresTermsAndConditionsSection.Content}}"
+                   userInput="{{termsAndConditionsData.content}}" stepKey="fillContent"/>
+        <click selector="{{AdminStoresTermsAndConditionsSection.Save}}" stepKey="clickSaveButton"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterSave"/>
+    </actionGroup>
+
+    <actionGroup name="AdminDeleteTermsAndConditionsRule">
+        <arguments>
+            <argument name="conditionName"/>
+        </arguments>
+        <amOnPage url="{{AdminStoresTermsAndConditionsPage.url}}" stepKey="amOnTermsAndConditionList"/>
+        <waitForPageLoad stepKey="waitForConditionList"/>
+        <click selector="//tbody//td[contains(@class, 'col-name')][contains(string(), '{{conditionName}}')]"
+               stepKey="openCondition"/>
+        <waitForPageLoad stepKey="waitForConditionPageLoad"/>
+        <click selector="{{AdminStoresTermsAndConditionsSection.DeleteCondition}}" stepKey="DeleteCondition"/>
+        <waitForPageLoad stepKey="waitForLoadConfirmMessage"/>
+        <click selector="{{AdminStoresTermsAndConditionsSection.ConfirmDeleteCondition}}" stepKey="ConfirmDelete"/>
+        <waitForPageLoad stepKey="waitForConditionListLoadAfterDelete"/>
+    </actionGroup>
+
+</actionGroups>

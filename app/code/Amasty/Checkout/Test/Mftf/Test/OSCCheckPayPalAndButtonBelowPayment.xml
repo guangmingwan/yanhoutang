@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OSCCheckPayPalAndButtonBelowPayment">
+        <annotations>
+            <features value="Customize Checkout via admin"/>
+            <stories value="Check Place Order With PayPal via the storefront"/>
+            <title value="Check Place Order with PayPal And Button Below Payment Methods on the Checkout"/>
+            <description value="Check Place Order with PayPal And Button Below Payment Methods on the Checkout"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="OSC-MFTF-28"/>
+            <group value="OSCCheckExternalPayments"/>
+            <group value="OSCCheckExternalPaymentsPayPal"/>
+        </annotations>
+
+        <before>
+            <!-- Login as admin -->
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin1"/>
+            <!-- Configuration setting -->
+            <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurateGeneralSetting">
+                <argument name="adminSettingOSCGeneral" value="SetOnlyEnableCheckout"/>
+            </actionGroup>
+            <actionGroup ref="AdminConfigurationSettingOSCPlaceButtonDesign" stepKey="ConfiguratePlaceButtonDesignSetting">
+                <argument name="adminSettingOSCPlaceButtonDesign" value="BelowTheSelectedPaymentMethodAndRed"/>
+            </actionGroup>
+            <!-- Activate Payment Method -->
+            <actionGroup ref="AdminActivatePayPalPaymentWithDisableInContext" stepKey="ActivatePayPal">
+                <argument name="paymentMethodsAccess" value="paymentMethodCredentialsPayPal"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Return default setting -->
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGeneral" stepKey="ReturnDefaultGeneralSetting"/>
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCPlaceButtonDesign" stepKey="ReturnDefaultPlaceButtonDesignSetting"/>
+            <actionGroup ref="AdminReturnDefaultSettingPayPalPayment" stepKey="ReturnDefaultSetting"/>
+            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+        </after>
+
+        <!--Add product to cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theBagImpulseDuffleData"/>
+        </actionGroup>
+
+        <actionGroup ref="GoToOSCAsGuestAndChooseShipping" stepKey="NavigateToOneStepCheckout">
+            <argument name="customer" value="customerOSCCheckPayPalAndBraintree"/>
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+
+        <!-- Check Payment method -->
+        <actionGroup ref="StorefrontOSCCheckPaymentMethod" stepKey="checkHavePayPalExpressCheckout">
+            <argument name="paymentMethods" value="paymentPaypalExpressCheckout"/>
+        </actionGroup>
+
+        <!-- Check totals -->
+        <actionGroup ref="StorefrontOSCCheckTotalsAndShippingPrice" stepKey="checkTotalsAndShipping">
+            <argument name="oneStepCheckoutData" value="OSCCheckPayPalAndButtonBelowPaymentMethods"/>
+        </actionGroup>
+
+        <!-- Place Order -->
+        <actionGroup ref="StorefrontOSCPlaceOrderBellowPaymentWithPayPalExpress" stepKey="placeOrderWithPayPal">
+            <argument name="customerCredentialsData" value="customerPayPalAccount"/>
+            <argument name="orderTotalForCheck" value="OSCCheckPayPalAndButtonBelowPaymentMethods.orderTotal"/>
+        </actionGroup>
+
+        <!-- Check Payment method in order-->
+        <actionGroup ref="AdminCheckPaymentMethodInLastOrder" stepKey="checkPaymentInAdminOrder">
+            <argument name="paymentMethods" value="paymentPaypalExpressCheckout"/>
+        </actionGroup>
+
+        <!-- Check totals in order-->
+        <actionGroup ref="AdminCheckTotalsInLastOrder" stepKey="CheckTotalsInAdminOrder">
+            <argument name="subtotal" value="OSCCheckPayPalAndButtonBelowPaymentMethods.cartSubtotal"/>
+            <argument name="grandTotal" value="OSCCheckPayPalAndButtonBelowPaymentMethods.orderTotal"/>
+        </actionGroup>
+
+    </test>
+</tests>

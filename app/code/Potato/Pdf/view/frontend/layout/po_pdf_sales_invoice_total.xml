@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Email Order Items List" design_abstraction="custom">
+    <body>
+        <block class="Magento\Sales\Block\Order\Invoice\Totals" name="invoice_totals" template="order/totals.phtml">
+            <block class="Magento\Tax\Block\Sales\Order\Tax" name="tax" template="order/tax.phtml">
+                <action method="setIsPlaneMode">
+                    <argument name="value" xsi:type="string">1</argument>
+                </action>
+            </block>
+        </block>
+    </body>
+</page>

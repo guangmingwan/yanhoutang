@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OSCConfigurationPageLayoutModernThreeColumns">
+        <annotations>
+            <features value="Customize Checkout via admin"/>
+            <stories value="Check Checkout Page Layout Modern With 3 Columns"/>
+            <title value="Check Checkout Page Layout Modern"/>
+            <description value="Check Checkout Page Layout Modern With 3 Columns on the OSC"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="OSC-MFTF-0205"/>
+            <group value="Amasty"/>
+            <group value="OSC"/>
+            <group value="Checkout"/>
+            <group value="OSCConfiguration"/>
+            <group value="OSCConfigurationDesign"/>
+        </annotations>
+
+        <before>
+            <!-- Login as admin -->
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin1"/>
+            <!-- Configuration setting -->
+            <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurationGeneralSetting">
+                <argument name="adminSettingOSCGeneral" value="SetOnlyEnableCheckout"/>
+            </actionGroup>
+            <actionGroup ref="AdminConfigurationSettingOSCDesignModern" stepKey="ConfigurationOSCDesignSetting">
+                <argument name="adminSettingOSCDesign" value="SetDesignModernThreeColumn"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Return default setting -->
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGeneral" stepKey="ReturnDefaultGeneralSetting"/>
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCDesign" stepKey="ReturnDefaultOSCDesignSetting"/>
+            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+        </after>
+
+        <!--Add First Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddFirstProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theBagJoustDuffleBag"/>
+        </actionGroup>
+
+        <!-- Check OSC Design -->
+        <actionGroup ref="StorefrontOSCCheckDesignModernThreeColumns" stepKey="CheckOSCDesignIsClassic2Columns"/>
+
+        <!-- Check Totals-->
+        <actionGroup ref="StorefrontOSCCheckOnlyTotalsPrice" stepKey="CheckTotals">
+            <argument name="oneStepCheckoutData" value="OSCConfigurationPageLayoutModernThreeColumns"/>
+        </actionGroup>
+
+    </test>
+</tests>

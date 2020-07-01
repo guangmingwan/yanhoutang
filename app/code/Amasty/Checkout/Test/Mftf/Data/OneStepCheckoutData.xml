@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+
+    <entity name="OSCCheckPayPalAndButtonBelowPaymentMethods" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$74.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="orderTotal">$79.00</data>
+    </entity>
+
+    <entity name="OSCCheckPayPalAndButtonBelowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$77.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">$87.00</data>
+    </entity>
+
+    <entity name="OSCCheckPayflowProAndButtonBelowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$68.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="tax">$5.61</data>
+        <data key="orderTotal">$83.61</data>
+    </entity>
+
+    <entity name="OSCCheckBraintreeAndButtonBelowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$95.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="tax">$7.84</data>
+        <data key="orderTotal">$112.84</data>
+    </entity>
+
+    <entity name="OSCCheckPayPalBraintreeAndButtonBelowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$84.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">$94.00</data>
+        <data key="sizeMH01">XS</data> <!-- 172 -->
+        <data key="colorMH01">Black</data>
+        <data key="customSkuMH01">MH01-XS-Black</data>
+    </entity>
+
+    <entity name="OSCCheckPayPalBraintreeAndButtonBelowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$45.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="orderTotal">$50.00</data>
+    </entity>
+
+    <entity name="OSCCheckPayflowProAndButtonBelowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$96.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">$106.00</data>
+    </entity>
+
+    <entity name="OSCCheckBraintreeAndButtonBelowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$59.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">$69.00</data>
+    </entity>
+
+    <entity name="OSCCheckEWayAndButtonBelowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$64.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">$74.00</data>
+    </entity>
+
+    <entity name="OSCCheckEWayAndButtonBelowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$92.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">$102.00</data>
+        <data key="sizeMH02">XS</data> <!-- 172 -->
+        <data key="colorMH02">Black</data>
+        <data key="customSkuMH02">MH02-XS-Black</data>
+    </entity>
+
+    <entity name="OSCCheckStripeAndButtonBelowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$74.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="orderTotal">$79.00</data>
+    </entity>
+
+    <entity name="OSCCheckStripeAndButtonBelowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$84.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="tax">$6.93</data>
+        <data key="orderTotal">$100.93</data>
+        <data key="sizeMH01">XS</data>
+        <data key="colorMH01">Black</data>
+    </entity>
+
+    <entity name="OSCCheckKlarnaAndButtonBelowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$99.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="tax">$8.17</data>
+        <data key="orderTotal">$117.17</data>
+    </entity>
+
+    <entity name="OSCCheckKlarnaAndButtonBelowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$122.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">132.00</data>
+        <data key="sizeMH01">XS</data>
+        <data key="colorMH01">Gray</data>
+        <data key="sizeMH02">M</data>
+        <data key="colorMH02">Black</data>
+    </entity>
+
+    <entity name="OSCCheckAuthoriseAndButtonBellowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$64.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="tax">$5.28</data>
+        <data key="orderTotal">$79.28</data>
+    </entity>
+
+    <entity name="OSCCheckAuthoriseAndButtonBellowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$104.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">$114.00</data>
+        <data key="sizeOneOfMH01">XS</data>
+        <data key="colorOneOfMH01">Gray</data>
+        <data key="sizeTwoOfMH01">M</data>
+        <data key="colorTwoOfMH01">Black</data>
+    </entity>
+
+    <entity name="OSCCheckAmazonAndButtonBellowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$122.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="tax">$10.07</data>
+        <data key="orderTotal">$142.07</data>
+        <data key="sizeMH01">XS</data>
+        <data key="colorMH01">Gray</data>
+        <data key="sizeMH02">M</data>
+        <data key="colorMH02">Black</data>
+    </entity>
+
+    <entity name="OSCCheckAmazonAndButtonBellowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$106.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">$116.00</data>
+    </entity>
+
+    <entity name="OSCCheckCashOnDeliveryAndButtonBellowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$32.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="tax">$2.64</data>
+        <data key="orderTotal">$39.64</data>
+    </entity>
+
+    <entity name="OSCCheckCashOnDeliveryAndButtonBellowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$74.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="orderTotal">$79.00</data>
+    </entity>
+
+    <entity name="OSCCheckPurchaseOrderAndButtonBellowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$54.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="orderTotal">$59.00</data>
+        <data key="purchaseOrderNumber">12345</data>
+    </entity>
+
+    <entity name="OSCCheckPurchaseOrderAndButtonBellowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$45.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="tax">$3.71</data>
+        <data key="orderTotal">$53.71</data>
+        <data key="purchaseOrderNumber">12345</data>
+    </entity>
+
+    <entity name="OSCCheckBankTransferAndButtonBellowOrder" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$59.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="tax">$4.87</data>
+        <data key="orderTotal">$68.87</data>
+    </entity>
+
+    <entity name="OSCCheckBankTransferAndButtonBellowPayment" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$45.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="orderTotal">$50.00</data>
+    </entity>
+
+    <!-- For Check Gift Messages -->
+    <entity name="OSCConfigurationCheckGiftMessages" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$119.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="tax">$9.82</data>
+        <data key="orderTotal">$129.00</data>
+        <data key="orderTotalWithTax">$138.82</data>
+    </entity>
+    <entity name="giftMessageForOrderOSC" type="OSCGiftMessageOrderData">
+        <data key="messageTo">GiftMessageForOrderTo</data>
+        <data key="messageFrom">GiftMessageForOrderFrom</data>
+        <data key="messageMessage">GiftMessageForOrderMESSAGE</data>
+    </entity>
+    <entity name="giftMessageForItemOSCImpulseDuffle" type="OSCGiftMessageForItemData">
+        <data key="messageTo">GiftMessageForItemImpulseDuffleTo</data>
+        <data key="messageFrom">GiftMessageForItemImpulseDuffleFrom</data>
+        <data key="messageMessage">GiftMessageForItemImpulseDuffleMESSAGE</data>
+    </entity>
+    <entity name="giftMessageForItemOSCWayfarerMessenger" type="OSCGiftMessageForItemData">
+        <data key="messageTo">GiftMessageForItemWayfarerMessengerTo</data>
+        <data key="messageFrom">GiftMessageForItemWayfarerMessengerFrom</data>
+        <data key="messageMessage">GiftMessageForItemWayfarerMessengerMESSAGE</data>
+    </entity>
+
+    <entity name="OSCConfigurationCheckGiftWrapIntegerNumber" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$79.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="giftWrapFeeValue">7</data>
+        <data key="giftWrapFeeAmount">$7.00</data>
+        <data key="orderTotal">$96.00</data>
+    </entity>
+
+    <entity name="OSCConfigurationCheckGiftWrapDecimalNumber" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$74.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="giftWrapFeeValue">1.42</data>
+        <data key="giftWrapFeeAmount">$1.42</data>
+        <data key="orderTotal">$85.42</data>
+    </entity>
+
+    <entity name="OSCDefaultCartPriceRuleDiscount10" type="oneStepCheckoutData">
+        <data key="name">Default Rule One Step Checkout</data>
+        <data key="websites">Main Website</data>
+        <data key="customerGroups">'NOT LOGGED IN', 'General', 'Wholesale', 'Retailer'</data>
+        <data key="apply">Fixed amount discount for whole cart</data>
+        <data key="discountAmount">10</data>
+    </entity>
+
+    <entity name="OSCDefaultCartPriceRuleDiscount0" type="oneStepCheckoutData">
+        <data key="name">Default Rule One Step Checkout</data>
+        <data key="websites">Main Website</data>
+        <data key="customerGroups">'NOT LOGGED IN', 'General', 'Wholesale', 'Retailer'</data>
+        <data key="apply">Fixed amount discount for whole cart</data>
+        <data key="discountAmount">0</data>
+    </entity>
+
+    <entity name="OSCCouponCode" type="oneStepCheckoutData">
+        <data key="code">testOSC</data>
+    </entity>
+
+    <entity name="OSCFunctionalCheckTotals" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$119.00</data>
+        <data key="discount">-$10.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="tax">$8.99</data>
+        <data key="orderTotal">$127.99</data>
+        <data key="sizeMH01">XS</data>
+        <data key="colorMH01">Gray</data>
+    </entity>
+
+    <entity name="OSCConfigurationAllowToEditProductAsGuestOne" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$86.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">$96.00</data>
+        <data key="sizeMH01">M</data>
+        <data key="colorMH01">Gray</data>
+    </entity>
+
+    <entity name="OSCConfigurationAllowToEditProductAsGuestTwo" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$154.00</data>
+        <data key="shippingPrice">$20.00</data>
+        <data key="orderTotal">$174.00</data>
+    </entity>
+
+    <entity name="OSCConfigurationAllowToEditProductAsGuestThree" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$206.00</data>
+        <data key="shippingPrice">$25.00</data>
+        <data key="orderTotal">$231.00</data>
+    </entity>
+
+    <entity name="OSCConfigurationAllowToEditProductAsCustomerOne" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$98.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="tax">$8.09</data>
+        <data key="orderTotal">$116.09</data>
+        <data key="sizeMH01">M</data>
+        <data key="colorMH01">Gray</data>
+        <data key="sizeMH01New">XS</data>
+        <data key="colorMH01New">Black</data>
+        <data key="productSkuMH01">MH01-XS-Black</data>
+    </entity>
+
+    <entity name="OSCConfigurationAllowToEditProductAsCustomerTwo" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$162.00</data>
+        <data key="shippingPrice">$20.00</data>
+        <data key="tax">$13.37</data>
+        <data key="orderTotal">$195.37</data>
+    </entity>
+
+    <entity name="OSCConfigurationAllowToEditProductAsCustomerThree" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$228.00</data>
+        <data key="shippingPrice">$25.00</data>
+        <data key="tax">$18.81</data>
+        <data key="orderTotal">$271.81</data>
+    </entity>
+
+    <entity name="OSCConfigurableCheckReloadShippingMethods" type="oneStepCheckoutData">
+        <data key="flatRatePriceOne">$5.00</data>
+        <data key="bestWayPriceOne">$10.00</data>
+        <data key="flatRatePriceTwo">$0.00</data>
+        <data key="bestWayPriceTwo">$0.00</data>
+    </entity>
+
+    <entity name="OSCConfigurationCheckOrderComment" type="oneStepCheckoutData">
+        <data key="comment">Test Order Comment on OSC</data>
+    </entity>
+
+    <entity name="OSCTermsAndConditionsData" type="oneStepCheckoutData">
+        <data key="name">OSC Terms And Conditions Test</data>
+        <data key="status">Enabled</data>
+        <data key="showContextAs">Text</data>
+        <data key="applied">Manually</data>
+        <data key="storeView">'All Store Views'</data>
+        <data key="checkboxText">OSC Checkbox Condition</data>
+        <data key="content">OSC Mega-Content Condition</data>
+    </entity>
+
+    <entity name="OSCFunctionalCheckEditShippingAndBillingAddress" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$84.00</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="orderTotal">$94.00</data>
+        <data key="sizeMH01">XS</data>
+        <data key="colorMH01">Black</data>
+    </entity>
+
+    <entity name="OSCCheckDontAllowGuestCheckout" type="oneStepCheckoutData">
+        <data key="sizeMH01">XS</data>
+        <data key="colorMH01">Black</data>
+    </entity>
+
+    <entity name="OSCConfigurationPageLayoutClassic2Columns" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$34.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="orderTotal">$39.00</data>
+    </entity>
+
+    <entity name="OSCConfigurationPageLayoutClassicThreeColumns" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$32.00</data>
+        <data key="shippingPrice">$5.00</data>
+        <data key="orderTotal">$37.00</data>
+    </entity>
+
+    <entity name="OSCConfigurationPageLayoutModernOneColumn" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$126.00</data>
+        <data key="orderTotal">$126.00</data>
+        <data key="sizeMH01">XS</data>
+        <data key="colorMH01">Black</data>
+    </entity>
+
+    <entity name="OSCConfigurationPageLayoutModernTwoColumns" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$54.00</data>
+        <data key="tax">$4.46</data>
+        <data key="orderTotal">$58.46</data>
+    </entity>
+
+    <entity name="OSCConfigurationPageLayoutModernThreeColumns" type="oneStepCheckoutData">
+        <data key="cartSubtotal">$34.00</data>
+        <data key="orderTotal">$34.00</data>
+    </entity>
+
+    <entity name="OSCFunctionalCheckInclCatalogAndShippingTax" type="oneStepCheckoutData">
+        <data key="taxClassForShipping">Taxable Goods</data>
+        <data key="taxClassForProduct">Taxable Goods</data>
+        <data key="calculationCatalogPrices">Including Tax</data>
+        <data key="calculationShippingPrices">Including Tax</data>
+        <data key="cartSubtotal">$89.61</data>
+        <data key="shippingPrice">$9.24</data>
+        <data key="tax">$8.15</data>
+        <data key="orderTotal">$107.00</data>
+        <data key="sizeMH01">XS</data>
+        <data key="colorMH01">Black</data>
+    </entity>
+
+    <entity name="OSCFunctionalCheckInclCatalogAndExclShippingTax" type="oneStepCheckoutData">
+        <data key="taxClassForShipping">Taxable Goods</data>
+        <data key="taxClassForProduct">Taxable Goods</data>
+        <data key="calculationCatalogPrices">Including Tax</data>
+        <data key="calculationShippingPrices">Excluding Tax</data>
+        <data key="cartSubtotal">$89.61</data>
+        <data key="shippingPrice">$10.00</data>
+        <data key="tax">$8.22</data>
+        <data key="orderTotal">$107.83</data>
+        <data key="sizeMH01">XS</data>
+        <data key="colorMH01">Black</data>
+    </entity>
+
+    <entity name="OSCFunctionalCheckExclCatalogAndInclShippingTax" type="oneStepCheckoutData">
+        <data key="taxClassForShipping">Taxable Goods</data>
+        <data key="taxClassForProduct">Taxable Goods</data>
+        <data key="calculationCatalogPrices">Excluding Tax</data>
+        <data key="calculationShippingPrices">Including Tax</data>
+        <data key="cartSubtotal">$97.00</data>
+        <data key="shippingPrice">$9.24</data>
+        <data key="tax">$8.76</data>
+        <data key="orderTotal">$115.00</data>
+        <data key="sizeMH01">XS</data>
+        <data key="colorMH01">Black</data>
+    </entity>
+
+</entities>

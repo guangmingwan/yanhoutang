@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OSCCheckBraintreeAndButtonBelowOrder">
+        <annotations>
+            <features value="Customize Checkout via admin"/>
+            <stories value="Check Place Order With Braintree via the storefront"/>
+            <title value="Check Place Order with Braintree And Button Below the Order Total on the Checkout"/>
+            <description value="Check Place Order with Braintree And Button Below the Order Total on the Checkout"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="OSC-MFTF-33"/>
+            <group value="OSCCheckExternalPayments"/>
+            <group value="OSCCheckExternalPaymentsBraintree"/>
+        </annotations>
+
+        <before>
+            <!-- Login as admin -->
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin1"/>
+            <!-- Configuration setting -->
+            <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurateGeneralSetting">
+                <argument name="adminSettingOSCGeneral" value="SetOnlyEnableCheckout"/>
+            </actionGroup>
+            <actionGroup ref="AdminConfigurationSettingOSCPlaceButtonDesign" stepKey="ConfiguratePlaceButtonDesignSetting">
+                <argument name="adminSettingOSCPlaceButtonDesign" value="BelowTheOrderTotalAndTurquoise"/>
+            </actionGroup>
+            <!-- Activate Payment Method -->
+            <actionGroup ref="AdminActivateBraintreePayment" stepKey="ActivateBraintreePayment">
+                <argument name="paymentMethodsAccess" value="paymentMethodCredentialsBraintree"/>
+            </actionGroup>
+            <!--Login As Customer -->
+            <actionGroup ref="LoginToStorefrontActionGroup" stepKey="LogIn">
+                <argument name="Customer" value="CustomerLogIn"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Return default setting -->
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGeneral" stepKey="ReturnDefaultGeneralSetting"/>
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCPlaceButtonDesign" stepKey="ReturnDefaultPlaceButtonDesignSetting"/>
+            <actionGroup ref="AdminReturnDefaultSettingBraintreePayment" stepKey="ReturnDefaultPaymentSetting"/>
+            <!-- Delete Product from cart if test failed -->
+            <actionGroup ref="DeleteProductFromTheCartIfTestWithLoginFailed" stepKey="DeleteProductIfTestFailed1">
+                <argument name="products" value="_theBagFusionBackpack"/>
+            </actionGroup>
+            <actionGroup ref="DeleteProductFromTheCartIfTestWithLoginFailed" stepKey="DeleteProductIfTestFailed2">
+                <argument name="products" value="_theBagDrivenBackpack"/>
+            </actionGroup>
+            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+        </after>
+
+        <!--Add First Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddFirstProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theBagFusionBackpack"/>
+        </actionGroup>
+
+        <!--Add Second Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddSecondProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theBagDrivenBackpack"/>
+        </actionGroup>
+
+        <actionGroup ref="GoToOSCAsCustomerDefaultAddressAndChooseShipping" stepKey="NavigateToOneStepCheckout">
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+
+        <!-- Check Payment method -->
+        <actionGroup ref="StorefrontOSCCheckPaymentMethod" stepKey="checkHaveBraintree">
+            <argument name="paymentMethods" value="paymentBraintree"/>
+        </actionGroup>
+
+        <!-- Check totals -->
+        <actionGroup ref="StorefrontOSCCheckTotalsAndShippingWithTax" stepKey="checkTotalsAndShipping">
+            <argument name="oneStepCheckoutData" value="OSCCheckBraintreeAndButtonBelowOrder"/>
+        </actionGroup>
+
+        <!-- Place Order -->
+        <actionGroup ref="StorefrontOSCPlaceOrderBelowOrderWithBraintree" stepKey="PlaceOrder">
+            <argument name="creditCard" value="creditCardVisa"/>
+        </actionGroup>
+
+        <!-- Check Payment method in order-->
+        <actionGroup ref="AdminCheckPaymentMethodInLastOrder" stepKey="checkPaymentInAdminOrder">
+            <argument name="paymentMethods" value="paymentBraintree"/>
+        </actionGroup>
+
+        <!-- Check totals in order-->
+        <actionGroup ref="AdminCheckTotalsInLastOrderWithTax" stepKey="CheckTotalsInAdminOrder">
+            <argument name="subtotal" value="OSCCheckBraintreeAndButtonBelowOrder.cartSubtotal"/>
+            <argument name="grandTotal" value="OSCCheckBraintreeAndButtonBelowOrder.orderTotal"/>
+            <argument name="tax" value="OSCCheckBraintreeAndButtonBelowOrder.tax"/>
+        </actionGroup>
+
+    </test>
+</tests>

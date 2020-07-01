@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="potato" translate="label" sortOrder="340">
+            <label>POTATOCOMMERCE</label>
+        </tab>
+        <section id="potato_pdf" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>PDF Customizer</label>
+            <tab>potato</tab>
+            <resource>Potato_Pdf::po_pdf_setting</resource>
+            <group id="general" translate="label,comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General</label>
+                <field id="is_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Extension</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="print_method" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Print PDF Method</label>
+                    <source_model>Potato\Pdf\Model\Source\System\PrintMethod</source_model>
+                </field>
+                <field id="lib_path" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Path to "Wkhtmltopdf"</label>
+                    <comment><![CDATA[<a href="http://wkhtmltopdf.org/" target="_blank">http://wkhtmltopdf.org</a>]]></comment>
+                </field>
+                <field id="additional_options" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Additional "Wkhtmltopdf" Options</label>
+                    <comment><![CDATA[<a href="http://wkhtmltopdf.org/usage/wkhtmltopdf.txt" target="_blank">"Wkhtmltopdf" Options</a>]]></comment>
+                </field>
+            </group>
+            <group id="advanced" translate="label,comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Advanced</label>
+                <field id="page_orientation" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Page Orientation</label>
+                    <source_model>Potato\Pdf\Model\Source\System\PageOrientation</source_model>
+                </field>
+                <field id="page_format" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Page Format</label>
+                    <source_model>Potato\Pdf\Model\Source\System\PageFormat</source_model>
+                </field>
+                <field id="margin_top" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Margin Top</label>
+                    <comment>mm</comment>
+                    <validate>validate-digits</validate>
+                </field>
+                <field id="margin_right" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Margin Right</label>
+                    <comment>mm</comment>
+                    <validate>validate-digits</validate>
+                </field>
+                <field id="margin_bottom" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Margin Bottom</label>
+                    <comment>mm</comment>
+                    <validate>validate-digits</validate>
+                </field>
+                <field id="margin_left" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Margin Left</label>
+                    <comment>mm</comment>
+                    <validate>validate-digits</validate>
+                </field>
+            </group>
+            <group id="order" translate="label,comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Order</label>
+                <field id="admin_template" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Template for admin</label>
+                    <source_model>Potato\Pdf\Model\Source\System\Template</source_model>
+                </field>
+                <field id="customer_template" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Template for customer</label>
+                    <source_model>Potato\Pdf\Model\Source\System\Template</source_model>
+                </field>
+            </group>
+            <group id="invoice" translate="label,comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Invoice</label>
+                <field id="admin_template" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Template for admin</label>
+                    <source_model>Potato\Pdf\Model\Source\System\Template</source_model>
+                </field>
+                <field id="customer_template" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Template for customer</label>
+                    <source_model>Potato\Pdf\Model\Source\System\Template</source_model>
+                </field>
+            </group>
+            <group id="shipment" translate="label,comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Shipment</label>
+                <field id="admin_template" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Template for admin</label>
+                    <source_model>Potato\Pdf\Model\Source\System\Template</source_model>
+                </field>
+                <field id="customer_template" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Template for customer</label>
+                    <source_model>Potato\Pdf\Model\Source\System\Template</source_model>
+                </field>
+            </group>
+            <group id="creditmemo" translate="label,comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Credit Memo</label>
+                <field id="admin_template" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Template for admin</label>
+                    <source_model>Potato\Pdf\Model\Source\System\Template</source_model>
+                </field>
+                <field id="customer_template" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Template for customer</label>
+                    <source_model>Potato\Pdf\Model\Source\System\Template</source_model>
+                </field>
+            </group>
+            <group id="email_settings" translate="label,comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Sales email settings</label>
+                <field id="attach_to_order" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Attach pdf to new order email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="attach_to_invoice" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Attach pdf to new invoice email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="attach_to_shipment" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Attach pdf to new shipment email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="attach_to_creditmemo" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Attach pdf to new credit memo email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="preview" translate="label,comment" type="text" sortOrder="80" showInDefault="1" showInWebsite="0"
+                   showInStore="0">
+                <label>Preview</label>
+                <field id="order_increment_id" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Order Increment Id</label>
+                </field>
+                <field id="invoice_increment_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Invoice Increment Id</label>
+                </field>
+                <field id="shipment_increment_id" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Shipment Increment Id</label>
+                </field>
+                <field id="creditmemo_increment_id" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Credit Memo Increment Id</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

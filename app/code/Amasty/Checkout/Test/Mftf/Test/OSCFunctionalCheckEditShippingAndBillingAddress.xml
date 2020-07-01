@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OSCFunctionalCheckEditShippingAndBillingAddress">
+        <annotations>
+            <features value="Customize Checkout via admin"/>
+            <stories value="Check Edit Shipping And Billing Address"/>
+            <title value="Check Edit Address"/>
+            <description value="Check Edit Shipping And Billing Address on the OSC"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="OSC-MFTF-52"/>
+            <group value="Amasty"/>
+            <group value="OSC"/>
+            <group value="Checkout"/>
+            <group value="OSCFunctional"/>
+        </annotations>
+
+        <before>
+            <!-- Login as admin -->
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin1"/>
+            <!-- Configuration setting -->
+            <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurationGeneralSetting">
+                <argument name="adminSettingOSCGeneral" value="SetOnlyEnableCheckout"/>
+            </actionGroup>
+            <!-- Login As Customer -->
+            <actionGroup ref="LoginToStorefrontActionGroup" stepKey="LogIn">
+                <argument name="Customer" value="CustomerLogIn"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Return default setting -->
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGeneral" stepKey="ReturnDefaultGeneralSetting"/>
+            <actionGroup ref="DeleteProductFromTheCartIfTestWithLoginFailed" stepKey="DeleteProductIfTestFailed1">
+                <argument name="products" value="_theBagStriveShoulderPackData"/>
+            </actionGroup>
+            <actionGroup ref="DeleteProductFromTheCartIfTestWithLoginFailed" stepKey="DeleteProductIfTestFailed2">
+                <argument name="products" value="_theMenHoodiesChazKangerooHoodie"/>
+            </actionGroup>
+            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+        </after>
+
+        <!--Add First Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddFirstProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theBagStriveShoulderPackData"/>
+        </actionGroup>
+        <!--Add Second Product to Cart-->
+        <actionGroup ref="AddConfigurableProductToCart" stepKey="AddSecondProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theMenHoodiesChazKangerooHoodie"/>
+            <argument name="size" value="OSCFunctionalCheckEditShippingAndBillingAddress.sizeMH01"/>
+            <argument name="color" value="OSCFunctionalCheckEditShippingAndBillingAddress.colorMH01"/>
+        </actionGroup>
+
+        <!-- Go To Checkout -->
+        <actionGroup ref="GoToOSCAsCustomerDefaultAddressAndChooseShipping" stepKey="NavigateToOneStepCheckoutFromCart">
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+
+        <!-- Edit Shipping And Billing Address -->
+        <actionGroup ref="StorefrontOSCAddNewShippingAddressAsCustomer" stepKey="AddNewShippingAddressAndShipHere">
+            <argument name="newShippingAddress" value="customerOSCCheckPayPalAndBraintree"/>
+        </actionGroup>
+        <actionGroup ref="StorefrontOSCEditBillingAddressAsCustomer" stepKey="AddNewBillingAddressAndShipHere">
+            <argument name="newBillingAddress" value="defaultCustomerOSCData"/>
+            <argument name="paymentMethods" value="paymentCheckMoneyOrder"/>
+        </actionGroup>
+
+        <!-- Check Totals -->
+        <actionGroup ref="StorefrontOSCCheckTotalsAndShippingPrice" stepKey="checkTotalsAndShipping">
+            <argument name="oneStepCheckoutData" value="OSCFunctionalCheckEditShippingAndBillingAddress"/>
+        </actionGroup>
+
+        <!-- Place Order -->
+        <actionGroup ref="StorefrontOSCPlaceOrderBelowOrderWithCheckMoney" stepKey="PlaceOrderWithCheckMoney"/>
+
+        <!-- Check Shipping And Billing Address In Order-->
+        <actionGroup ref="AdminCheckShippingAddressInLastOrder" stepKey="CheckShippingAddressInOrder">
+            <argument name="shippingAddress" value="customerOSCCheckPayPalAndBraintree"/>
+        </actionGroup>
+        <actionGroup ref="AdminCheckBillingAddressInLastOrder" stepKey="CheckBillingAddressInOrder">
+            <argument name="billingAddress" value="defaultCustomerOSCData"/>
+        </actionGroup>
+
+        <!-- Check Totals in Admin Area Order -->
+        <actionGroup ref="AdminCheckTotalsInLastOrder" stepKey="CheckTotalsInAdminOrder">
+            <argument name="subtotal" value="OSCFunctionalCheckEditShippingAndBillingAddress.cartSubtotal"/>
+            <argument name="grandTotal" value="OSCFunctionalCheckEditShippingAndBillingAddress.orderTotal"/>
+        </actionGroup>
+
+    </test>
+</tests>

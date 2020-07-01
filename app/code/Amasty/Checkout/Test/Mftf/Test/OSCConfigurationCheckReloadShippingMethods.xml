@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OSCConfigurationCheckReloadShippingMethods">
+        <annotations>
+            <features value="Customize Checkout via admin"/>
+            <stories value="Check Reload Shipping Methods When Coupon Code is Applied on the OSC"/>
+            <title value="Check Setting Reload Shipping Methods"/>
+            <description value="Check Reload Shipping Methods When Coupon Code is Applied on the OSC"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="OSC-MFTF-21"/>
+            <group value="Amasty"/>
+            <group value="OSC"/>
+            <group value="Checkout"/>
+            <group value="OSCConfiguration"/>
+            <group value="OSCConfigurationGeneral"/>
+        </annotations>
+
+        <before>
+            <!-- Login as admin -->
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin1"/>
+            <!-- Configuration setting -->
+            <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurationGeneralSetting">
+                <argument name="adminSettingOSCGeneral" value="SetEnableCheckoutAndReloadShippingMethods"/>
+            </actionGroup>
+            <!--Create Default Cart Price Rule-->
+            <actionGroup ref="AdminCreateCartPriceRuleActionGroup" stepKey="CreateCartPriceRule">
+                <argument name="ruleName" value="OSCDefaultCartPriceRuleDiscount0"/>
+            </actionGroup>
+            <actionGroup ref="EditCartPriceRuleFreeShipping" stepKey="AddFreeShippingForCartPriceRule">
+                <argument name="cartRuleName" value="OSCDefaultCartPriceRuleDiscount0.name"/>
+            </actionGroup>
+            <actionGroup ref="EditCartPriceRuleAddCouponCode" stepKey="AddCouponCodeForCartPriceRule">
+                <argument name="cartRuleName" value="OSCDefaultCartPriceRuleDiscount0.name"/>
+                <argument name="couponCode" value="OSCCouponCode.code"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Return default setting -->
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGeneral" stepKey="ReturnDefaultGeneralSetting"/>
+            <!--Delete Created Rule -->
+            <actionGroup ref="DeleteCartPriceRuleByName" stepKey="deleteCreatedCartPriceRule">
+                <argument name="ruleName" value="{{OSCDefaultCartPriceRuleDiscount0.name}}"/>
+            </actionGroup>
+            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+        </after>
+
+        <!--Add First Product to Cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddFirstProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theWatchClamberData"/>
+        </actionGroup>
+
+        <!-- Go To Checkout -->
+        <actionGroup ref="GoToOSCAsGuestAndChooseShipping" stepKey="NavigateToOneStepCheckoutFromCart">
+            <argument name="customer" value="defaultCustomerOSCData"/>
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+
+        <actionGroup ref="StorefrontOSCCheckPriceShipping" stepKey="CheckShippingPriceFlatRate1">
+            <argument name="shippingPrices" value="OSCConfigurableCheckReloadShippingMethods.flatRatePriceOne"/>
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+        <actionGroup ref="StorefrontOSCCheckPriceShipping" stepKey="CheckShippingPriceBestWay1">
+            <argument name="shippingPrices" value="OSCConfigurableCheckReloadShippingMethods.bestWayPriceOne"/>
+            <argument name="shippingMethodsOnCheckout" value="BestWayMethod"/>
+        </actionGroup>
+
+        <!--Coupon -->
+        <actionGroup ref="StorefrontApplyCouponCodeOnTheCheckout" stepKey="AddCoupon">
+            <argument name="coupon" value="OSCCouponCode"/>
+        </actionGroup>
+
+        <actionGroup ref="StorefrontOSCCheckPriceShipping" stepKey="CheckShippingPriceFlatRate2">
+            <argument name="shippingPrices" value="OSCConfigurableCheckReloadShippingMethods.flatRatePriceTwo"/>
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+        <actionGroup ref="StorefrontOSCCheckPriceShipping" stepKey="CheckShippingPriceBestWay2">
+            <argument name="shippingPrices" value="OSCConfigurableCheckReloadShippingMethods.bestWayPriceTwo"/>
+            <argument name="shippingMethodsOnCheckout" value="BestWayMethod"/>
+        </actionGroup>
+
+        <!--Cancel Apply Code-->
+        <actionGroup ref="StorefrontCancelCouponCodeOnTheCheckout" stepKey="CancelCoupon"/>
+
+        <actionGroup ref="StorefrontOSCCheckPriceShipping" stepKey="CheckShippingPriceFlatRate3">
+            <argument name="shippingPrices" value="OSCConfigurableCheckReloadShippingMethods.flatRatePriceOne"/>
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+        <actionGroup ref="StorefrontOSCCheckPriceShipping" stepKey="CheckShippingPriceBestWay3">
+            <argument name="shippingPrices" value="OSCConfigurableCheckReloadShippingMethods.bestWayPriceOne"/>
+            <argument name="shippingMethodsOnCheckout" value="BestWayMethod"/>
+        </actionGroup>
+
+    </test>
+</tests>

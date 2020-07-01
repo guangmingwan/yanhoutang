@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+
+    <entity name="BelowTheOrderTotalAndTurquoise" type="adminSettingOSCPlaceButtonDesign">
+        <data key="PlaceOrderButtonColor">#09b3b3</data>
+        <data key="PlaceOrderButtonPosition">summary</data>
+    </entity>
+
+    <entity name="BelowTheSelectedPaymentMethodAndRed" type="adminSettingOSCPlaceButtonDesign">
+        <data key="PlaceOrderButtonColor">#f56269</data>
+        <data key="PlaceOrderButtonPosition">payment</data>
+    </entity>
+
+    <entity name="SetOnlyEnableCheckout" type="adminSettingOSCGeneral">
+        <data key="EnableOneStepCheckout">Yes</data>
+        <data key="AllowGuestCheckout">Yes</data>
+        <data key="CheckoutPageTitle">Checkout</data>
+        <data key="CheckoutPageDescription">Please enter your details below to complete your purchase</data>
+        <data key="AllowToEditProductsInTheOrderSummary">No</data>
+        <data key="ReloadShippingMethodsWhenCouponCodeIsApplied">No</data>
+    </entity>
+
+    <entity name="SetDontAllowGuestCheckout" type="adminSettingOSCGeneral">
+        <data key="EnableOneStepCheckout">Yes</data>
+        <data key="AllowGuestCheckout">No</data>
+        <data key="CheckoutPageTitle">Checkout</data>
+        <data key="CheckoutPageDescription">Please enter your details below to complete your purchase</data>
+        <data key="AllowToEditProductsInTheOrderSummary">No</data>
+        <data key="ReloadShippingMethodsWhenCouponCodeIsApplied">No</data>
+    </entity>
+
+    <entity name="SetTitle" type="adminSettingOSCDefaultValues">
+        <data key="CheckoutPageTitle">My Title</data>
+        <data key="CheckoutPageDescription">Please enter your details below to complete your purchase</data>
+        <data key="EnableOneStepCheckout">Yes</data>
+        <data key="AllowGuestCheckout">Yes</data>
+        <data key="AllowToEditProductsInTheOrderSummary">No</data>
+        <data key="ReloadShippingMethodsWhenCouponCodeIsApplied">No</data>
+    </entity>
+
+    <entity name="SetDescription" type="adminSettingOSCDefaultValues">
+        <data key="CheckoutPageTitle">Checkout</data>
+        <data key="CheckoutPageDescription">My Description</data>
+        <data key="EnableOneStepCheckout">Yes</data>
+        <data key="AllowGuestCheckout">Yes</data>
+        <data key="AllowToEditProductsInTheOrderSummary">No</data>
+        <data key="ReloadShippingMethodsWhenCouponCodeIsApplied">No</data>
+    </entity>
+
+    <entity name="SetTitleAndDescription" type="adminSettingOSCDefaultValues">
+        <data key="CheckoutPageTitle">My Title</data>
+        <data key="CheckoutPageDescription">My Description</data>
+        <data key="EnableOneStepCheckout">Yes</data>
+        <data key="AllowGuestCheckout">Yes</data>
+        <data key="AllowToEditProductsInTheOrderSummary">No</data>
+        <data key="ReloadShippingMethodsWhenCouponCodeIsApplied">No</data>
+    </entity>
+
+    <entity name="SetOnlyDisableCheckout" type="adminSettingOSCGeneral">
+        <data key="EnableOneStepCheckout">No</data>
+        <data key="AllowGuestCheckout">Yes</data>
+        <data key="CheckoutPageTitle">Checkout</data>
+        <data key="CheckoutPageDescription">Please enter your details below to complete your purchase</data>
+        <data key="AllowToEditProductsInTheOrderSummary">No</data>
+        <data key="ReloadShippingMethodsWhenCouponCodeIsApplied">No</data>
+    </entity>
+
+    <entity name="SetEnableCheckoutAndAllowToEditProductQty" type="adminSettingOSCGeneral">
+        <data key="EnableOneStepCheckout">Yes</data>
+        <data key="AllowGuestCheckout">Yes</data>
+        <data key="CheckoutPageTitle">Checkout</data>
+        <data key="CheckoutPageDescription">Please enter your details below to complete your purchase</data>
+        <data key="AllowToEditProductsInTheOrderSummary">Yes</data>
+        <data key="ReloadShippingMethodsWhenCouponCodeIsApplied">No</data>
+    </entity>
+
+    <entity name="SetEnableCheckoutAndReloadShippingMethods" type="adminSettingOSCGeneral">
+        <data key="EnableOneStepCheckout">Yes</data>
+        <data key="AllowGuestCheckout">Yes</data>
+        <data key="CheckoutPageTitle">Checkout</data>
+        <data key="CheckoutPageDescription">Please enter your details below to complete your purchase</data>
+        <data key="AllowToEditProductsInTheOrderSummary">No</data>
+        <data key="ReloadShippingMethodsWhenCouponCodeIsApplied">Yes</data>
+    </entity>
+
+    <entity name="SetAllDefaultValues" type="adminSettingOSCDefaultValues">
+        <data key="DefaultShippingMethod">flatrate_flatrate</data>
+        <data key="DefaultPaymentMethod">cashondelivery</data>
+        <data key="DefaultCountry">AU</data>
+        <data key="DefaultRegion">New South Wales</data>
+        <data key="DefaultPostalCode">11001</data>
+        <data key="DefaultCity">Dubbo</data>
+    </entity>
+
+    <entity name="SetAllowGiftMessagesOnlyOnOrderLevel" type="adminSettingOSCGifts">
+        <data key="AllowGiftMessagesOnOrderLevel">Yes</data>
+        <data key="AllowGiftMessagesOnOrderItems">No</data>
+    </entity>
+
+    <entity name="SetAllowGiftMessagesOnlyForOrderItems" type="adminSettingOSCGifts">
+        <data key="AllowGiftMessagesOnOrderLevel">No</data>
+        <data key="AllowGiftMessagesOnOrderItems">Yes</data>
+    </entity>
+
+    <entity name="SetAllowAllGiftMessages" type="adminSettingOSCGifts">
+        <data key="AllowGiftMessagesOnOrderLevel">Yes</data>
+        <data key="AllowGiftMessagesOnOrderItems">Yes</data>
+    </entity>
+
+    <entity name="SetDontAllowAllGiftMessages" type="adminSettingOSCGifts">
+        <data key="AllowGiftMessagesOnOrderLevel">No</data>
+        <data key="AllowGiftMessagesOnOrderItems">No</data>
+    </entity>
+
+    <entity name="SetAdditionalEnableOrderComment" type="adminSettingOSCAdditionalMain">
+        <data key="OrderComment">Yes</data>
+        <data key="DiscountField">Yes</data>
+        <data key="LetCustomersCreateAccountAtCheckout">No</data>
+        <data key="ShowTaxVATNumber">No</data>
+    </entity>
+
+    <entity name="SetAdditionalDefaultValue" type="adminSettingOSCAdditionalMain">
+        <data key="OrderComment">No</data>
+        <data key="DiscountField">Yes</data>
+        <data key="LetCustomersCreateAccountAtCheckout">No</data>
+        <data key="ShowTaxVATNumber">No</data>
+    </entity>
+
+    <entity name="SetAdditionalNewsletterIsCheckedByDefault" type="adminSettingOSCAdditionalNewsletter">
+        <data key="NewsletterIsCheckedByDefault">Yes</data>
+    </entity>
+
+    <entity name="SetAdditionalNewsletterDontIsCheckedByDefault" type="adminSettingOSCAdditionalNewsletter">
+        <data key="NewsletterIsCheckedByDefault">No</data>
+    </entity>
+
+    <entity name="SetAdditionalTermsBelowPayment" type="adminSettingOSCAdditionalTermsAndConditions">
+        <data key="TermsAndConditionsCheckboxPositioning">Below the Selected Payment Method</data>
+    </entity>
+
+    <entity name="SetAdditionalTermsBelowOrder" type="adminSettingOSCAdditionalTermsAndConditions">
+        <data key="TermsAndConditionsCheckboxPositioning">Below the Order Total</data>
+    </entity>
+
+    <entity name="SetDesignDisplayHeaderAndFooter" type="adminSettingOSCDesign">
+        <data key="DisplayHeaderAndFooter">Yes</data>
+        <data key="CheckoutDesign">Classic</data>
+        <data key="CheckoutPageLayout">2 Columns</data>
+        <data key="NumberOfLinesInAStreetAddress">3</data>
+        <data key="DisplayBillingAddressOn">Payment Method</data>
+        <data key="DisplayMultipleShippingAddressIn">Grid</data>
+    </entity>
+
+    <entity name="SetDesignDefault" type="adminSettingOSCDesign">
+        <data key="DisplayHeaderAndFooter">No</data>
+        <data key="CheckoutDesign">Classic</data>
+        <data key="CheckoutPageLayout">2 Columns</data>
+        <data key="NumberOfLinesInAStreetAddress">3</data>
+        <data key="DisplayBillingAddressOn">Payment Method</data>
+        <data key="DisplayMultipleShippingAddressIn">Grid</data>
+    </entity>
+
+    <entity name="SetDesignClassicThreeColumns" type="adminSettingOSCDesign">
+        <data key="DisplayHeaderAndFooter">No</data>
+        <data key="CheckoutDesign">Classic</data>
+        <data key="CheckoutPageLayout">3 Columns</data>
+        <data key="NumberOfLinesInAStreetAddress">3</data>
+        <data key="DisplayBillingAddressOn">Payment Method</data>
+        <data key="DisplayMultipleShippingAddressIn">Grid</data>
+    </entity>
+
+    <entity name="SetDesignModernOneColumn" type="adminSettingOSCDesign">
+        <data key="DisplayHeaderAndFooter">No</data>
+        <data key="CheckoutDesign">Modern</data>
+        <data key="CheckoutPageLayout">1 Column</data>
+        <data key="NumberOfLinesInAStreetAddress">3</data>
+        <data key="DisplayBillingAddressOn">Payment Method</data>
+        <data key="DisplayMultipleShippingAddressIn">Grid</data>
+    </entity>
+
+    <entity name="SetDesignModernTwoColumn" type="adminSettingOSCDesign">
+        <data key="DisplayHeaderAndFooter">No</data>
+        <data key="CheckoutDesign">Modern</data>
+        <data key="CheckoutPageLayout">2 Columns</data>
+        <data key="NumberOfLinesInAStreetAddress">3</data>
+        <data key="DisplayBillingAddressOn">Payment Method</data>
+        <data key="DisplayMultipleShippingAddressIn">Grid</data>
+    </entity>
+
+    <entity name="SetDesignModernThreeColumn" type="adminSettingOSCDesign">
+        <data key="DisplayHeaderAndFooter">No</data>
+        <data key="CheckoutDesign">Modern</data>
+        <data key="CheckoutPageLayout">3 Columns</data>
+        <data key="NumberOfLinesInAStreetAddress">3</data>
+        <data key="DisplayBillingAddressOn">Payment Method</data>
+        <data key="DisplayMultipleShippingAddressIn">Grid</data>
+    </entity>
+
+    <entity name="SetBlockNamesWithoutDelivery" type="adminSettingOSCBlockNames">
+        <data key="ShippingAddress">OSC Shipping Address Test Name</data>
+        <data key="ShippingMethod">OSC Shipping Method Test Name</data>
+        <data key="PaymentMethod">OSC Payment Method Test Name</data>
+        <data key="OrderSummary">OSC Order Summary Test Name</data>
+    </entity>
+
+    <entity name="SetIfBlockNamesIsEmpty" type="adminSettingOSCBlockNames">
+        <data key="ShippingAddress">Shipping Address</data>
+        <data key="ShippingMethod">Shipping Method</data>
+        <data key="PaymentMethod">Payment Method</data>
+        <data key="Delivery">Delivery</data>
+        <data key="OrderSummary">Order Summary</data>
+    </entity>
+
+</entities>

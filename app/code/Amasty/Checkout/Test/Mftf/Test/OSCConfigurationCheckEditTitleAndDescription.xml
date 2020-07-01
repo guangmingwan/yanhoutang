@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OSCConfigurationCheckEditTitleAndDescription">
+        <annotations>
+            <features value="Customize Checkout via admin"/>
+            <stories value="Check Edit and Delete Title and Description"/>
+            <title value="Check Edit Title and Description"/>
+            <description value="Check Edit and Delete Title and Description on the Checkout"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="OSC-MFTF-08"/>
+            <group value="Amasty"/>
+            <group value="OSC"/>
+            <group value="Checkout"/>
+            <group value="OSCConfiguration"/>
+            <group value="OSCConfigurationGeneral"/>
+        </annotations>
+
+        <before>
+            <!-- Login as admin -->
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin1"/>
+            <!-- Configuration setting -->
+            <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurationGeneralSetting">
+                <argument name="adminSettingOSCGeneral" value="SetOnlyEnableCheckout"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Return default setting -->
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGeneral" stepKey="ReturnDefaultGeneralSetting"/>
+            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+        </after>
+
+        <!--Add product to cart-->
+        <actionGroup ref="AddProductToCart" stepKey="AddProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theWatchClamberData"/>
+        </actionGroup>
+
+        <!--Check Title And Description-->
+        <actionGroup ref="StorefrontOSCCheckHaveTitleAndDescription" stepKey="CheckTitleAndDescription">
+            <argument name="title" value="SetOnlyEnableCheckout.CheckoutPageTitle"/>
+            <argument name="description" value="SetOnlyEnableCheckout.CheckoutPageDescription"/>
+        </actionGroup>
+
+        <!--Edit Title-->
+        <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurateTitle">
+            <argument name="adminSettingOSCGeneral" value="SetTitleAndDescription"/>
+        </actionGroup>
+
+        <!--Check Title And Description-->
+        <actionGroup ref="StorefrontOSCCheckHaveTitleAndDescription" stepKey="CheckTitleAndDescription2">
+            <argument name="title" value="SetTitleAndDescription.CheckoutPageTitle"/>
+            <argument name="description" value="SetTitleAndDescription.CheckoutPageDescription"/>
+        </actionGroup>
+
+        <!--Delete Title And Description-->
+        <actionGroup ref="AdminConfigurationSettingOSCGeneralDeleteTitle" stepKey="DeleteTitle"/>
+        <actionGroup ref="AdminConfigurationSettingOSCGeneralDeleteDescription" stepKey="DeleteDescription"/>
+
+        <!--Check No Title and No Description-->
+        <actionGroup ref="StorefrontOSCCheckNoTitleAndDescription" stepKey="CheckTitleAndDescription3"/>
+
+    </test>
+</tests>

@@ -1,0 +1,91 @@
+<div class='po-pdf-content-editor-wrapper'>
+    <div class='po-pdf-content-editor-header'>
+        <div class='po-pdf-content-editor-header__edit po-pdf-content-editor-header--element-active'>
+            <?= __('Editor') ?>
+        </div>
+        <div class='po-pdf-content-editor-header__preview'>
+            <?= __('Preview') ?>
+        </div>
+        <a class="po-pdf-content-editor-header__edit" target="_blank" href="http://app.potatocommerce.com/variables.html"><?= __('Variables') ?></a>
+    </div>
+    <div class='po-pdf-content-editor-body'>
+        <div class='po-pdf-content-editor-body__edit'>
+            <textarea data-form-part="po_pdf_template_form" name="content" cols="87"  rows="20" id="content" class="admin__control-textarea validate-editor">
+                <?= /* @escapeNotVerified */ $block->getContent() ?>
+            </textarea>
+        </div>
+        <div class='po-pdf-content-editor-body__preview'></div>
+    </div>
+</div>
+<script type='text/javascript'>
+    var PO_PDF_PREVIEW_URL = '<?= /* @escapeNotVerified */ $block->getPreviewUrl() ?>';
+    require(["jquery",
+        "Potato_Pdf/js/codemirror/codemirror",
+        "Potato_Pdf/js/codemirror/mode/xml",
+        "Potato_Pdf/js/codemirror/mode/javascript",
+        "Potato_Pdf/js/codemirror/mode/css",
+        "Potato_Pdf/js/codemirror/mode/htmlmixed",
+        "jquery/validate",
+        "mage/translate",
+        "jquery/ui"],
+        function($, CodeMirror){
+
+        $.validator.addMethod(
+            'validate-editor', function (value) {
+                document.getElementById('content').value = window.poPdfCodemirrorEditor.getValue();
+                return true;
+            }, $.mage.__(''));
+
+        window.poPdfInitTemplateEditor = function() {
+            var contentEl = document.getElementById('content');
+            if (typeof window.poPdfCodemirrorEditor == "undefined") {
+                window.poPdfCodemirrorEditor = CodeMirror.fromTextArea(contentEl, {
+                    lineNumbers: true,
+                    selectionPointer: true,
+                    mode: "htmlmixed"
+                });
+                window.poPdfCodemirrorEditor.setSize('100%', '100%');
+                return;
+            }
+            //todo listen form submit
+            window.poPdfCodemirrorEditor.setValue(contentEl.value);
+        };
+
+        poPdfInitTemplateEditorTabs = function() {
+            var activeClassName = 'po-pdf-content-editor-header--element-active';
+            $('.po-pdf-content-editor-header__edit').first().click(function(e){
+                $('.po-pdf-content-editor-header__preview').first().removeClass(activeClassName);
+                $('.po-pdf-content-editor-header__edit').first().addClass(activeClassName);
+                $('.po-pdf-content-editor-body__preview').first().hide();
+                $('.po-pdf-content-editor-body__edit').first().show();
+                if (typeof $('.po-pdf-content-editor-body__preview iframe').first().get(0) != "undefined") {
+                    $('.po-pdf-content-editor-body__preview iframe').first().get(0).remove();
+                }
+            });
+            $('.po-pdf-content-editor-header__preview').first().click(function(e){
+                $('.po-pdf-content-editor-header__edit').first().removeClass(activeClassName);
+                $('.po-pdf-content-editor-header__preview').first().addClass(activeClassName);
+                $('.po-pdf-content-editor-body__edit').first().hide();
+                $('.po-pdf-content-editor-body__preview').first().append('<iframe></iframe>');
+                var iframe_document = $('.po-pdf-content-editor-body__preview iframe').first().get(0).contentDocument;
+                iframe_document.write(
+                    '<h1>Please wait...</h1>' +
+                    '<form method="post">'
+                    + '<input type="hidden" id="form_key" name="form_key"/>'
+                    + '<input type="hidden" id="content" name="content"/>'
+                    + '</form>'
+                );
+                var form = iframe_document.getElementsByTagName('form')[0];
+                var formKeyInput = iframe_document.getElementById('form_key');
+                formKeyInput.value = FORM_KEY;
+                var contentInput = iframe_document.getElementById('content');
+                contentInput.value = window.poPdfCodemirrorEditor.getValue();
+                form.action = PO_PDF_PREVIEW_URL;
+                form.submit();
+                $('.po-pdf-content-editor-body__preview').first().show();
+            });
+        };
+        window.poPdfInitTemplateEditor();
+        poPdfInitTemplateEditorTabs();
+    });
+</script>

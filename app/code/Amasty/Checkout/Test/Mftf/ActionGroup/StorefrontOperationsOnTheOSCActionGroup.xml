@@ -1,0 +1,929 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="GoToOSCFromCart">
+        <amOnPage url="{{FrontCartPage.url}}" stepKey="navigateToShoppingCart1"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoadCart"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadCart"/>
+        <click selector="//button[@data-role='proceed-to-checkout']" stepKey="ProceedToCheckout"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoadCheckout"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+    </actionGroup>
+
+
+    <actionGroup name="GoToOSCAsCustomerDefaultAddressAndChooseShipping" extends="GoToOSCFromCart">
+        <arguments>
+            <argument name="shippingMethodsOnCheckout"/>
+        </arguments>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+        <click selector="//input[@value='{{shippingMethodsOnCheckout.shippingMethodsNameOnCheckout}}']" stepKey="selectShippingMethod"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+    </actionGroup>
+
+
+    <actionGroup name="GoToOSCAsCustomerChooseAddressAndShipping" extends="GoToOSCFromCart">
+        <arguments>
+            <argument name="customer"/>
+            <argument name="shippingMethodsOnCheckout"/>
+        </arguments>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+        <click selector="//div[contains(@class, 'not-selected')][contains(string(), '{{customer.region}}')][contains(string(), '{{customer.postcode}}')]//span[contains(string(), 'Ship Here')]"
+               stepKey="selectCustomerAddressMethod"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <click selector="//input[@value='{{shippingMethodsOnCheckout.shippingMethodsNameOnCheckout}}']" stepKey="selectShippingMethod"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad3"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
+    </actionGroup>
+
+
+    <actionGroup name="GoToOSCAsGuestAndChooseShipping" extends="GoToOSCFromCart">
+        <arguments>
+            <argument name="customer"/>
+            <argument name="shippingMethodsOnCheckout"/>
+        </arguments>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.Email}}" userInput="{{customer.email}}"
+                   stepKey="enterEmail"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.FirstName}}"
+                   userInput="{{customer.firstname}}" stepKey="enterFirstName"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.LastName}}" userInput="{{customer.lastname}}"
+                   stepKey="enterLastName"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad3"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.Street}}"
+                   userInput="{{customer.street}}" stepKey="enterStreet"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad4"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.City}}" userInput="{{customer.city}}"
+                   stepKey="enterCity"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad5"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.SelectCountry}}"
+                      userInput="{{customer.country}}"
+                      stepKey="selectCountry"/>
+        <scrollTo selector="{{StorefrontOneStepCheckoutSection.Postcode}}" stepKey="ScrollToPostcode"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.Postcode}}"
+                   userInput="{{customer.postcode}}" stepKey="enterPostcode"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad6"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.SelectRegion}}"
+                      userInput="{{customer.region}}"
+                      stepKey="selectRegion"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad7"/>
+        <scrollTo selector="{{StorefrontOneStepCheckoutSection.Telephone}}" stepKey="ScrollToTelephone"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.Telephone}}"
+                   userInput="{{customer.telephone}}" stepKey="enterTelephone"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad8"/>
+        <waitForElementNotVisible selector="{{StorefrontOneStepCheckoutSection.ShippingLoader}}" stepKey="WaitForLoaderNotVisible"/>
+        <wait time="2" stepKey="waitForLoadShipping"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad9"/>
+        <scrollTo selector="{{StorefrontOneStepCheckoutSection.Telephone}}" stepKey="ScrollToButtonNext"/>
+        <click selector="//input[@value='{{shippingMethodsOnCheckout.shippingMethodsNameOnCheckout}}']" stepKey="selectShippingMethod"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad3"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad10"/>
+    </actionGroup>
+
+    <actionGroup name="GoToOSCAsGuestWithPopup" extends="GoToOSCFromCart">
+        <arguments>
+            <argument name="Customer"/>
+        </arguments>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+        <fillField selector="//input[@name='username']"
+                   userInput="{{Customer.email}}" stepKey="enterEmail"/>
+        <fillField selector="//input[@name='password']"
+                   userInput="{{Customer.password}}" stepKey="enterPassword"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
+        <click selector="//div[@class='primary']//span[text()='Sign In']" stepKey="SignInWithPopup"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad3"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad4"/>
+    </actionGroup>
+
+    <!-- Action Groups below should be used after: "GoToOSCAsCustomerDefaultAddressAndChooseShipping" or
+           "GoToOSCAsCustomerChooseAddressAndShipping" or "GoToOSCAsGuestAndChooseShipping"-->
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowPaymentWithPayflowPro">
+        <arguments>
+            <argument name="creditCard"/>
+        </arguments>
+        <conditionalClick selector="//input[@value='payflowpro']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='payflowpro']"
+                          visible="false" stepKey="choosePaymentMethod"/>
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayflowProCreditCardNumber}}"
+                   userInput="{{creditCard.cardNumber}}"
+                   stepKey="enterNumber"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.PayflowExpirationDateMonth}}"
+                      userInput="{{creditCard.expirationMonth}}" stepKey="selectMonth"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.PayflowExpirationDateYear}}"
+                      userInput="{{creditCard.expirationYear}}" stepKey="selectYear"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayflowCVC}}"
+                   userInput="{{creditCard.cvc}}"
+                   stepKey="enterCVCNumber"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterPayment}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad2"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad3"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowOrderWithPayflowPro">
+        <arguments>
+            <argument name="creditCard"/>
+        </arguments>
+        <conditionalClick selector="//input[@value='payflowpro']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='payflowpro']"
+                          visible="false" stepKey="choosePaymentMethod"/>
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayflowProCreditCardNumber}}"
+                   userInput="{{creditCard.cardNumber}}"
+                   stepKey="enterNumber"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.PayflowExpirationDateMonth}}"
+                      userInput="{{creditCard.expirationMonth}}" stepKey="selectMonth"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.PayflowExpirationDateYear}}"
+                      userInput="{{creditCard.expirationYear}}" stepKey="selectYear"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayflowCVC}}"
+                   userInput="{{creditCard.cvc}}"
+                   stepKey="enterCVCNumber"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad2"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad3"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBellowOrderWithPayPalBraintree">
+        <arguments>
+            <argument name="customerCredentialsData"/>
+        </arguments>
+        <conditionalClick selector="//input[@value='{{paymentBraintreePayPal.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentBraintreePayPal.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad time="10" stepKey="waitForPageLoad1"/>
+        <scrollTo selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="scrollToPlaceOrder"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="clickPlace1"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <switchToNextTab stepKey="switchToInContentTab"/>
+        <waitForPageLoad stepKey="waitForPageLoadPopUp1"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupChangeEmail}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupChangeEmail}}"
+                          visible="true" stepKey="clickToChangeEmail"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterClickForChangeEmail"/>
+        <waitForElement selector="{{StorefrontOneStepCheckoutSection.PayPalPopupEmail}}" stepKey="waitForLoginForm"/>
+        <waitForPageLoad stepKey="waitForPageLoadEmail"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayPalPopupEmail}}"
+                   userInput="{{customerCredentialsData.email}}" stepKey="enterEmail"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonNext}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonNext}}"
+                          visible="true" stepKey="clickToNext"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterClickNext"/>
+        <waitForElement selector="{{StorefrontOneStepCheckoutSection.PayPalPopupPassword}}" stepKey="waitForPasswordForm"/>
+        <waitForPageLoad stepKey="waitForPageLoadForFillPassword"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayPalPopupPassword}}"
+                   userInput="{{customerCredentialsData.password}}" stepKey="enterPassword"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonLogin}}" stepKey="login"/>
+        <waitForPageLoad stepKey="waitForLogin"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupCheckAgreePolitic}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupCheckAgreePolitic}}"
+                          visible="true" stepKey="checkAgree"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonAgree}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonAgree}}"
+                          visible="true" stepKey="clickButtonAgree"/>
+        <waitForPageLoad stepKey="waitForAgree"/>
+        <conditionalClick selector="//a[@id='notNowLink']"
+                          dependentSelector="//a[@id='notNowLink']"
+                          visible="true" stepKey="clickButtonDontNowTurnOnOneTouch"/>
+        <waitForPageLoad stepKey="waitForClickNotNowTurn"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonConfirm}}" stepKey="waitForVisiblePage"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonConfirm}}" stepKey="Confirm"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <waitForPageLoad stepKey="waitForPageAfterConfirm"/>
+        <waitForAjaxLoad stepKey="waitForAjaxAfterConfirm"/>
+        <waitForPageLoad stepKey="waitForPageClosePopUp"/>
+        <wait time="3" stepKey="waitForConfirm"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="clickPlace2"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="3" stepKey="waitForPageLoad5"/>
+        <waitForElementVisible selector="{{SuccessPageSection.SuccessMessage}}" stepKey="waitForVisibleSuccessPage"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad6"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBellowPaymentWithPayPalBraintree">
+        <arguments>
+            <argument name="customerCredentialsData"/>
+        </arguments>
+        <conditionalClick selector="//input[@value='{{paymentBraintreePayPal.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentBraintreePayPal.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad time="20" stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <scrollTo selector="//label[@for='{{paymentBraintreePayPal.paymentValue}}']" stepKey="scrollToPlaceOrder"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.BraintreePlaceOrderContinuePayPal}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.NewBraintreePlaceOrderContinuePayPal}}"
+                          visible="false" stepKey="clickPlaceIfOld"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.NewBraintreePlaceOrderContinuePayPal}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.BraintreePlaceOrderContinuePayPal}}"
+                          visible="false" stepKey="clickPlaceIfNew"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <switchToNextTab stepKey="switchToInContentTab"/>
+        <waitForPageLoad stepKey="waitForPageLoadPopUp1"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupChangeEmail}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupChangeEmail}}"
+                          visible="true" stepKey="clickToChangeEmail"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterClickForChangeEmail"/>
+        <waitForElement selector="{{StorefrontOneStepCheckoutSection.PayPalPopupEmail}}" stepKey="waitForLoginForm"/>
+        <waitForPageLoad stepKey="waitForPageLoadEmail"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayPalPopupEmail}}"
+                   userInput="{{customerCredentialsData.email}}" stepKey="enterEmail"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonNext}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonNext}}"
+                          visible="true" stepKey="clickToNext"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterClickNext"/>
+        <waitForElement selector="{{StorefrontOneStepCheckoutSection.PayPalPopupPassword}}" stepKey="waitForPasswordForm"/>
+        <waitForPageLoad stepKey="waitForPageLoadForFillPassword"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayPalPopupPassword}}"
+                   userInput="{{customerCredentialsData.password}}" stepKey="enterPassword"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonLogin}}" stepKey="login"/>
+        <waitForPageLoad stepKey="waitForLogin"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupCheckAgreePolitic}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupCheckAgreePolitic}}"
+                          visible="true" stepKey="checkAgree"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonAgree}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonAgree}}"
+                          visible="true" stepKey="clickButtonAgree"/>
+        <waitForPageLoad stepKey="waitForAgree"/>
+        <conditionalClick selector="//a[@id='notNowLink']"
+                          dependentSelector="//a[@id='notNowLink']"
+                          visible="true" stepKey="clickButtonDontNowTurnOnOneTouch"/>
+        <waitForPageLoad stepKey="waitForClickNotNowTurn"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonConfirm}}" stepKey="waitForVisiblePage"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonConfirm}}" stepKey="Confirm"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <waitForPageLoad stepKey="waitForPageAfterConfirm"/>
+        <waitForAjaxLoad stepKey="waitForAjaxAfterConfirm"/>
+        <waitForPageLoad stepKey="waitForPageClosePopUp"/>
+        <wait time="3" stepKey="waitForConfirm"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.BraintreePlaceOrderPayPal}}" stepKey="clickPlace2"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="3" stepKey="waitForPageLoad5"/>
+        <waitForElementVisible selector="{{SuccessPageSection.SuccessMessage}}" stepKey="waitForVisibleSuccessPage"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBellowOrderWithPayPalExpress">
+        <arguments>
+            <argument name="customerCredentialsData"/>
+            <argument name="orderTotalForCheck"/>
+        </arguments>
+        <conditionalClick selector="//input[@value='{{paymentPaypalExpressCheckout.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentPaypalExpressCheckout.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad time="20" stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <scrollTo selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="scrollToPlaceOrder"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="clickPlace1"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <switchToNextTab stepKey="switchToInContentTab"/>
+        <waitForPageLoad stepKey="waitForPageLoadPopUp1"/>
+        <waitForElement selector="{{StorefrontOneStepCheckoutSection.PayPalPopupEmail}}" stepKey="waitForLoginForm" />
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayPalPopupEmail}}"
+                   userInput="{{customerCredentialsData.email}}" stepKey="enterEmail"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonNext}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonNext}}"
+                          visible="true" stepKey="clickToNext"/>
+        <waitForElement selector="{{StorefrontOneStepCheckoutSection.PayPalPopupPassword}}" stepKey="waitForPasswordForm" />
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayPalPopupPassword}}"
+                   userInput="{{customerCredentialsData.password}}" stepKey="enterPassword"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonLogin}}" stepKey="login"/>
+        <waitForPageLoad stepKey="waitForLogin"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupCheckAgreePolitic}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupCheckAgreePolitic}}"
+                          visible="true" stepKey="checkAgree"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonAgree}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonAgree}}"
+                          visible="true" stepKey="clickButtonAgree"/>
+        <waitForPageLoad stepKey="waitForAgree"/>
+        <conditionalClick selector="//a[@id='notNowLink']"
+                          dependentSelector="//a[@id='notNowLink']"
+                          visible="true" stepKey="clickButtonDontNowTurnOnOneTouch"/>
+        <waitForPageLoad stepKey="waitForClickNotNowTurn"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonConfirm}}" stepKey="waitForVisiblePage"/>
+        <see selector="{{StorefrontOneStepCheckoutSection.PayPalPopupCartTotal}}"
+             userInput="{{orderTotalForCheck}}"
+             stepKey="seeOrderTotal"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonConfirm}}" stepKey="Confirm"/>
+        <waitForPageLoad stepKey="waitForConfirmOperation"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <waitForPageLoad stepKey="waitForPageAfterConfirm"/>
+        <waitForAjaxLoad stepKey="waitForAjaxAfterConfirm"/>
+        <waitForPageLoad time="2" stepKey="waitForPageLoad5"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBellowPaymentWithPayPalExpress">
+        <arguments>
+            <argument name="customerCredentialsData"/>
+            <argument name="orderTotalForCheck"/>
+        </arguments>
+        <conditionalClick selector="//input[@value='{{paymentPaypalExpressCheckout.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentPaypalExpressCheckout.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad time="20" stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <scrollTo selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterPayment}}" stepKey="scrollToPlaceOrder"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad2"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterPayment}}" stepKey="clickPlace1"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad3"/>
+        <switchToNextTab stepKey="switchToInContentTab"/>
+        <waitForPageLoad stepKey="waitForPageLoadPopUp1"/>
+        <waitForElement selector="{{StorefrontOneStepCheckoutSection.PayPalPopupEmail}}" stepKey="waitForLoginForm" />
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayPalPopupEmail}}"
+                   userInput="{{customerCredentialsData.email}}" stepKey="enterEmail"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonNext}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonNext}}"
+                          visible="true" stepKey="clickToNext"/>
+        <waitForElement selector="{{StorefrontOneStepCheckoutSection.PayPalPopupPassword}}" stepKey="waitForPasswordForm" />
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PayPalPopupPassword}}"
+                   userInput="{{customerCredentialsData.password}}" stepKey="enterPassword"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonLogin}}" stepKey="login"/>
+        <waitForPageLoad stepKey="waitForLogin"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupCheckAgreePolitic}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupCheckAgreePolitic}}"
+                          visible="true" stepKey="checkAgree"/>
+        <conditionalClick selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonAgree}}"
+                          dependentSelector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonAgree}}"
+                          visible="true" stepKey="clickButtonAgree"/>
+        <waitForPageLoad stepKey="waitForAgree"/>
+        <conditionalClick selector="//a[@id='notNowLink']"
+                          dependentSelector="//a[@id='notNowLink']"
+                          visible="true" stepKey="clickButtonDontNowTurnOnOneTouch"/>
+        <waitForPageLoad stepKey="waitForClickNotNowTurn"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonConfirm}}" stepKey="waitForVisiblePage"/>
+        <see selector="{{StorefrontOneStepCheckoutSection.PayPalPopupCartTotal}}"
+             userInput="{{orderTotalForCheck}}"
+             stepKey="seeOrderTotal"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PayPalPopupButtonConfirm}}" stepKey="Confirm"/>
+        <waitForPageLoad stepKey="waitForConfirmOperation"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <waitForPageLoad stepKey="waitForPageAfterConfirm"/>
+        <waitForAjaxLoad stepKey="waitForAjaxAfterConfirm"/>
+        <waitForPageLoad time="2" stepKey="waitForPageLoad5"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad6"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCFillDataBraintreePayment">
+        <arguments>
+            <argument name="creditCard"/>
+        </arguments>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad time="20" stepKey="waitForAjaxLoad1"/>
+        <waitForPageLoad stepKey="waitForPageLoadForBraintree"/>
+        <conditionalClick selector="//input[@value='{{paymentBraintree.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentBraintree.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad time="20" stepKey="waitForPageForLoadPaymentMethods"/>
+        <executeJS function="jQuery('#braintree-hosted-field-number').attr('id', 'IframeCreditNumber')" stepKey="getIframeCreditNumberId"/>
+        <switchToIFrame userInput="IframeCreditNumber" stepKey="clickIframeCreditNumber"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.BraintreeCreditCardNumber}}" stepKey="waitForBraintreeCreditCardNumber"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.BraintreeCreditCardNumber}}"
+                   userInput="{{creditCard.cardNumber}}"
+                   stepKey="enterNumber"/>
+        <switchToIFrame stepKey="switchBack1"/>
+        <executeJS function="jQuery('#braintree-hosted-field-expirationMonth').attr('id', 'IframeExpMonth')" stepKey="getIframeExpMonthId"/>
+        <switchToIFrame userInput="IframeExpMonth" stepKey="clickIframeExpMonth"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.BraintreeExpirationDateMonth}}" stepKey="waitForBraintreeExpirationDateMonth"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.BraintreeExpirationDateMonth}}"
+                   userInput="{{creditCard.expirationMonth}}"
+                   stepKey="enterMonth"/>
+        <switchToIFrame stepKey="switchBack2"/>
+        <executeJS function="jQuery('#braintree-hosted-field-expirationYear').attr('id', 'IframeExpYear')" stepKey="getIframeExpYearId"/>
+        <switchToIFrame userInput="IframeExpYear" stepKey="clickIframeExpYear"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.BraintreeExpirationDateYear}}" stepKey="waitForBraintreeExpirationDateYear"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.BraintreeExpirationDateYear}}"
+                   userInput="{{creditCard.expirationYear}}"
+                   stepKey="enterYear"/>
+        <switchToIFrame stepKey="switchBack3"/>
+        <executeJS function="jQuery('#braintree-hosted-field-cvv').attr('id', 'IframeCvv')" stepKey="getIframeIframeCvv"/>
+        <switchToIFrame userInput="IframeCvv" stepKey="clickIframeCvv"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.BraintreeCVC}}" stepKey="waitForBraintreeCVC"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.BraintreeCVC}}"
+                   userInput="{{creditCard.cvc}}"
+                   stepKey="enterCvc"/>
+        <switchToIFrame stepKey="switchBack4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowOrderWithBraintree" extends="StorefrontOSCFillDataBraintreePayment">
+        <arguments>
+            <argument name="creditCard"/>
+        </arguments>
+        <waitForPageLoad time="5" stepKey="waitForLoadButton"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="5" stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowPaymentWithBraintree" extends="StorefrontOSCFillDataBraintreePayment">
+        <arguments>
+            <argument name="creditCard"/>
+        </arguments>
+        <waitForPageLoad time="5" stepKey="waitForLoadButton"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterPayment}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="5" stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowOrderWithEWay">
+        <arguments>
+            <argument name="creditCard"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <conditionalClick selector="//input[@value='{{paymentEWay.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentEWay.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.EWayCreditCardNumber}}"
+                   userInput="{{creditCard.cardNumber}}"
+                   stepKey="enterNumber"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.EWayExpirationDateMonth}}"
+                      userInput="{{creditCard.expirationMonth}}" stepKey="selectMonth"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.EWayExpirationDateYear}}"
+                      userInput="{{creditCard.expirationYear}}" stepKey="selectYear"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.EWayCVC}}"
+                   userInput="{{creditCard.cvc}}"
+                   stepKey="enterCVCNumber"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowPaymentWithEWay">
+        <arguments>
+            <argument name="creditCard"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <conditionalClick selector="//input[@value='{{paymentEWay.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentEWay.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.EWayCreditCardNumber}}"
+                   userInput="{{creditCard.cardNumber}}"
+                   stepKey="enterNumber"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.EWayExpirationDateMonth}}"
+                      userInput="{{creditCard.expirationMonth}}" stepKey="selectMonth"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.EWayExpirationDateYear}}"
+                      userInput="{{creditCard.expirationYear}}" stepKey="selectYear"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.EWayCVC}}"
+                   userInput="{{creditCard.cvc}}"
+                   stepKey="enterCVCNumber"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterPayment}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowOrderWithKlarna">
+        <conditionalClick selector="//input[@value='klarna_pay_later']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='klarna_pay_later']"
+                          visible="false" stepKey="choosePaymentMethod"/>
+        <waitForPageLoad time="50" stepKey="waitForPageForLoadPaymentMethods"/>
+        <wait time="4" stepKey="waitForLoadButtonPlaceOrder"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad2"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad3"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowPaymentWithKlarna">
+        <conditionalClick selector="//input[@value='klarna_pay_later']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='klarna_pay_later']"
+                          visible="false" stepKey="choosePaymentMethod"/>
+        <waitForPageLoad time="50" stepKey="waitForPageForLoadPaymentMethods"/>
+        <wait time="4" stepKey="waitForLoadButtonPlaceOrder"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterPayment}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad2"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad3"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowOrderWithStripe">
+        <arguments>
+            <argument name="creditCard"/>
+        </arguments>
+        <conditionalClick selector="//input[@value='amasty_stripe']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='amasty_stripe']"
+                          visible="false" stepKey="choosePaymentMethod"/>
+        <waitForPageLoad time="20" stepKey="waitForPageForLoadPaymentMethods"/>
+        <executeJS function="jQuery('iframe').attr('id', 'IframeStripe')" stepKey="getIframeCreditNumberId"/>
+        <switchToIFrame userInput="IframeStripe" stepKey="clickIframeStripe"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.StripeCreditCardNumber}}" stepKey="waitForStripeCreditCardNumber"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.StripeCreditCardNumber}}"
+                   userInput="{{creditCard.cardNumber}}"
+                   stepKey="enterNumber"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.StripeExpirationDate}}"
+                   userInput="{{creditCard.expirationDate}}" stepKey="selectDate"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.StripeCVC}}"
+                   userInput="{{creditCard.cvc}}"
+                   stepKey="enterCVCNumber"/>
+        <switchToIFrame stepKey="switchBack2"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad2"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad3"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowPaymentWithStripe">
+        <arguments>
+            <argument name="creditCard"/>
+        </arguments>
+        <conditionalClick selector="//input[@value='amasty_stripe']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='amasty_stripe']"
+                          visible="false" stepKey="choosePaymentMethod"/>
+        <waitForPageLoad time="20" stepKey="waitForPageForLoadPaymentMethods"/>
+        <executeJS function="jQuery('iframe').attr('id', 'IframeStripe')" stepKey="getIframeCreditNumberId"/>
+        <switchToIFrame userInput="IframeStripe" stepKey="clickIframeStripe"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.StripeCreditCardNumber}}" stepKey="waitForStripeCreditCardNumber"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.StripeCreditCardNumber}}"
+                   userInput="{{creditCard.cardNumber}}"
+                   stepKey="enterNumber"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.StripeExpirationDate}}"
+                   userInput="{{creditCard.expirationDate}}" stepKey="selectDate"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.StripeCVC}}"
+                   userInput="{{creditCard.cvc}}"
+                   stepKey="enterCVCNumber"/>
+        <switchToIFrame stepKey="switchBack2"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterPayment}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad2"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad3"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowOrderWithCashOnDelivery">
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <conditionalClick selector="//input[@value='{{paymentCashOnDeliveryPayment.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentCashOnDeliveryPayment.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowPaymentWithCashOnDelivery">
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <conditionalClick selector="//input[@value='{{paymentCashOnDeliveryPayment.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentCashOnDeliveryPayment.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterPayment}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowOrderWithBankTransfer">
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <conditionalClick selector="//input[@value='{{paymentBankTransferPayment.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentBankTransferPayment.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowPaymentWithBankTransfer">
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <conditionalClick selector="//input[@value='{{paymentBankTransferPayment.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentBankTransferPayment.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterPayment}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowOrderWithPurchaseOrder">
+        <arguments>
+            <argument name="purchaseOrderNumber"/>
+        </arguments>
+        <conditionalClick selector="//input[@value='{{paymentPurchaseOrder.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentPurchaseOrder.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PurchaseOrderNumber}}" userInput="{{purchaseOrderNumber}}"
+                   stepKey="enterNumber"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterEnterNumber"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowPaymentWithPurchaseOrder">
+        <arguments>
+            <argument name="purchaseOrderNumber"/>
+        </arguments>
+        <conditionalClick selector="//input[@value='{{paymentPurchaseOrder.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//input[@value='{{paymentPurchaseOrder.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.PurchaseOrderNumber}}" userInput="{{purchaseOrderNumber}}"
+                   stepKey="enterNumber"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterEnterNumber"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterPayment}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+    <actionGroup name="StorefrontOSCPlaceOrderBelowOrderWithCheckMoney">
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <conditionalClick selector="//input[@value='{{paymentCheckMoneyOrder.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//label[@for='{{paymentCheckMoneyOrder.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod" />
+        <waitForPageLoad stepKey="waitForPageLoadWithPayment"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoadWithPayment"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.PlaceOrderAfterOrderTotal}}" stepKey="waitForPlaceOrderButton"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForPageLoad time="10" stepKey="waitForPageLoad3"/>
+        <waitForElementVisible selector="{{SuccessPageSection.SuccessMessage}}" stepKey="assertSuccessPage"/>
+        <waitForPageLoad time="20" stepKey="waitForPageLoad4"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCFillGiftMessageForOrder" extends="StorefrontOSCCheckGiftMessageBase">
+        <arguments>
+            <argument name="OSCGiftMessageOrderData"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPopUp2"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.GiftMessageOrderTo}}"
+                   userInput="{{OSCGiftMessageOrderData.messageTo}}" stepKey="enterMessageTo"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.GiftMessageOrderFrom}}"
+                   userInput="{{OSCGiftMessageOrderData.messageFrom}}" stepKey="enterMessageFrom"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.GiftMessageOrderMessage}}"
+                   userInput="{{OSCGiftMessageOrderData.messageMessage}}" stepKey="enterMessage"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.GiftMessageUpdate}}"
+               stepKey="updateMessage"/>
+        <waitForPageLoad stepKey="waitForPopUp3"/>
+        <waitForAjaxLoad stepKey="waitForAjax2"/>
+        <waitForElementVisible time="80" selector="{{StorefrontOneStepCheckoutSection.GiftMessageSuccessMsg}}" stepKey="checkUpdateMessage"/>
+    </actionGroup>
+
+    <actionGroup name="StorefrontOSCFillGiftMessageForItem" extends="StorefrontOSCCheckGiftMessageBase">
+        <arguments>
+            <argument name="OSCGiftMessageForItemData"/>
+            <argument name="products"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPopUp2"/>
+        <fillField selector="//span[contains(string(), '{{products.productName}}')]/parent::div/following-sibling::div//input[contains(@id, 'to')]"
+                   userInput="{{OSCGiftMessageForItemData.messageTo}}" stepKey="enterMessageTo"/>
+        <fillField selector="//span[contains(string(), '{{products.productName}}')]/parent::div/following-sibling::div//input[contains(@id, 'from')]"
+                   userInput="{{OSCGiftMessageForItemData.messageFrom}}" stepKey="enterMessageFrom"/>
+        <fillField selector="//span[contains(string(), '{{products.productName}}')]/parent::div/following-sibling::div//textarea[contains(@id, 'message')]"
+                   userInput="{{OSCGiftMessageForItemData.messageMessage}}" stepKey="enterMessage"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.GiftMessageUpdate}}"
+               stepKey="updateMessage"/>
+        <waitForPageLoad stepKey="waitForPopUp3"/>
+        <waitForAjaxLoad stepKey="waitForAjax2"/>
+        <waitForElementVisible time="80" selector="{{StorefrontOneStepCheckoutSection.GiftMessageSuccessMsg}}" stepKey="checkUpdateMessage"/>
+    </actionGroup>
+
+    <actionGroup name="StorefrontOSCAddGiftWrapAndCheckAddInTotals">
+        <arguments>
+            <argument name="giftWrapFee"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPopUp2"/>
+        <checkOption selector="{{StorefrontOneStepCheckoutSection.GiftWrapCheckbox}}"
+                     stepKey="addGiftWrap"/>
+        <waitForPageLoad stepKey="waitForPopUp3"/>
+        <waitForAjaxLoad stepKey="waitForAjax2"/>
+        <waitForElementNotVisible time="20" selector="{{StorefrontOneStepCheckoutSection.OrderTotalsLoader}}"
+                                  stepKey="waitForLooadTotals"/>
+        <see selector="{{StorefrontOneStepCheckoutSection.GiftWrapInTotals}}"
+             userInput="{{giftWrapFee}}"
+             stepKey="checkValueGiftWrap"/>
+    </actionGroup>
+
+    <actionGroup name="StorefrontOSCChangeQtyProduct">
+        <arguments>
+            <argument name="products"/>
+            <argument name="addProductQty"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPopUp"/>
+        <waitForAjaxLoad stepKey="waitForAjax"/>
+        <waitForElementNotVisible time="20" selector="{{StorefrontOneStepCheckoutSection.OrderTotalsLoader}}"
+                                  stepKey="waitForLoadTotals"/>
+        <fillField selector="//div[@role='tablist']//strong[contains(string(), '{{products.productName}}')]/following-sibling::div//input"
+                   userInput="{{addProductQty.qty}}" stepKey="enterNewQty"/>
+        <click selector="//strong[contains(string(), '{{products.productName}}')]/ancestor::form/button"
+               stepKey="UpdateQty"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoadCheckout"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCChangeCustomOptionsProduct">
+        <arguments>
+            <argument name="products"/>
+            <argument name="size"/>
+            <argument name="color"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPopUp"/>
+        <waitForAjaxLoad stepKey="waitForAjax"/>
+        <waitForElementNotVisible time="20" selector="{{StorefrontOneStepCheckoutSection.OrderTotalsLoader}}"
+                                  stepKey="waitForLooadTotals"/>
+        <click selector="//strong[contains(string(), '{{products.productName}}')]/ancestor::form//span[@class='toggle']"
+               stepKey="openCustomOtionsTab"/>
+        <click selector="//strong[contains(string(), '{{products.productName}}')]/ancestor::form//option[contains(string(), '{{size}}')]"
+               stepKey="selectSize"/>
+        <click selector="//strong[contains(string(), '{{products.productName}}')]/ancestor::form//option[contains(string(), '{{color}}')]"
+               stepKey="selectColor"/>
+        <click selector="//strong[contains(string(), '{{products.productName}}')]/ancestor::form/button"
+               stepKey="UpdateOptions"/>
+        <waitForPageLoad time="50" stepKey="waitForPageLoadCheckout"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCAddCommentForOrder">
+        <arguments>
+            <argument name="comment"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.OrderComment}}" userInput="{{comment}}"
+               stepKey="FillOrderComment"/>
+    </actionGroup>
+
+    <actionGroup name="StorefrontOSCAddNewShippingAddressAsCustomer">
+        <arguments>
+            <argument name="newShippingAddress"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.AddNewShippingAddressButton}}"
+               stepKey="clickToAddNewAddress"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewShippingFirstName}}"
+                   userInput="{{newShippingAddress.firstname}}" stepKey="enterFirstName"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewShippingLastName}}"
+                   userInput="{{newShippingAddress.lastname}}" stepKey="enterLastName"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewShippingStreet}}"
+                   userInput="{{newShippingAddress.street}}" stepKey="enterStreet"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewShippingCity}}"
+                   userInput="{{newShippingAddress.city}}" stepKey="enterCity"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.AddNewShippingCountry}}"
+                      userInput="{{newShippingAddress.country}}" stepKey="selectCountry"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewShippingPostcode}}"
+                   userInput="{{newShippingAddress.postcode}}" stepKey="enterPostcode"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.AddNewShippingRegion}}"
+                      userInput="{{newShippingAddress.region}}" stepKey="selectRegion"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewShippingTelephone}}"
+                   userInput="{{newShippingAddress.telephone}}" stepKey="enterTelephone"/>
+        <uncheckOption selector="{{StorefrontOneStepCheckoutSection.AddNewShippingSaveInBook}}"
+                       stepKey="uncheckSaveAddressInBook"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.AddNewShippingShipHere}}"
+               stepKey="clickToShipHere"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad3"/>
+    </actionGroup>
+
+
+    <actionGroup name="StorefrontOSCEditBillingAddressAsCustomer">
+        <arguments>
+            <argument name="newBillingAddress"/>
+            <argument name="paymentMethods"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <conditionalClick selector="//input[@value='{{paymentMethods.paymentValue}}']"
+                          dependentSelector="//div[contains(@class, 'active')]//label[@for='{{paymentMethods.paymentValue}}']"
+                          visible="false" stepKey="choosePaymentMethod"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <uncheckOption selector="{{StorefrontOneStepCheckoutSection.BillingAsShippingCheckbox}}"
+                       stepKey="uncheckBillingAsShipping"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.BillingAsShippingCheckbox}}"
+                               stepKey="waitForSelect"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.SelectBillingAddress}}"
+                      userInput="New Address" stepKey="chooseNewAddress"/>
+        <waitForElementVisible selector="{{StorefrontOneStepCheckoutSection.AddNewBillingFirstName}}"
+                               stepKey="waitForFieldFirstName"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewBillingFirstName}}"
+                   userInput="{{newBillingAddress.firstname}}" stepKey="enterFirstName"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewBillingLastName}}"
+                   userInput="{{newBillingAddress.lastname}}" stepKey="enterLastName"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewBillingStreet}}"
+                   userInput="{{newBillingAddress.street}}" stepKey="enterStreet"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewBillingCity}}"
+                   userInput="{{newBillingAddress.city}}" stepKey="enterCity"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.AddNewBillingCountry}}"
+                      userInput="{{newBillingAddress.country}}" stepKey="selectCountry"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewBillingPostcode}}"
+                   userInput="{{newBillingAddress.postcode}}" stepKey="enterPostcode"/>
+        <selectOption selector="{{StorefrontOneStepCheckoutSection.AddNewBillingRegion}}"
+                      userInput="{{newBillingAddress.region}}" stepKey="selectRegion"/>
+        <fillField selector="{{StorefrontOneStepCheckoutSection.AddNewBillingTelephone}}"
+                   userInput="{{newBillingAddress.telephone}}" stepKey="enterTelephone"/>
+        <uncheckOption selector="{{StorefrontOneStepCheckoutSection.AddNewBillingSaveInBook}}"
+                       stepKey="uncheckSaveAddressInBook"/>
+        <click selector="{{StorefrontOneStepCheckoutSection.AddNewBillingAddressUpdate}}"
+               stepKey="clickToUpdateBillingAddress"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad3"/>
+    </actionGroup>
+
+
+</actionGroups>

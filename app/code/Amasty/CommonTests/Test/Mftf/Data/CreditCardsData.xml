@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_CommonTests
+ */
+-->
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+
+    <!-- Use For Braintree and Payflow Pro -->
+    <entity name="creditCardVisa" type="creditCard">
+        <data key="cardNumber">0000000000000000</data> <!-- Enter Credit Card Number-->
+        <data key="expirationMonth">0</data> <!-- Use without 0, for exemple ("3" - it is March) -->
+        <data key="expirationYear">0000</data> <!-- Input year in format "yyyy", for exemple "2021" -->
+        <data key="cvc">000</data> <!-- Enter cvc code-->
+    </entity>
+
+    <!-- Use For eWay -->
+    <entity name="creditCardVisaTwo" type="creditCard">
+        <data key="cardNumber">0000000000000000</data>  <!-- Enter Credit Card Number-->
+        <data key="expirationMonth">0</data> <!-- Use without 0, for exemple ("3" - it is March) -->
+        <data key="expirationYear">0</data> <!-- Input year in format "yyyy", for exemple "2021" -->
+        <data key="cvc">000</data> <!-- Enter cvc code-->
+    </entity>
+
+    <!-- Use For PayPal and Braintree PayPal -->
+    <entity name="customerPayPalAccount" type="customerCredentialsData">
+        <data key="email">0</data> <!-- Enter Personal Test Account PayPal email-->
+        <data key="password">0</data> <!-- Enter Personal Test Account PayPal password-->
+    </entity>
+
+    <!-- Use For Stripe -->
+    <entity name="creditCardStripe" type="creditCard">
+        <data key="cardNumber">0000000000000000</data>  <!-- Enter Credit Card Number-->
+        <data key="expirationDate">0000</data> <!-- Use as "mmyy", for exemple ("0321" - it is March of 2021) -->
+        <data key="cvc">000</data>  <!-- Enter cvc code-->
+    </entity>
+
+</entities>

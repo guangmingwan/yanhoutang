@@ -1,0 +1,277 @@
+<!--@subject {{trans "PDF"}} @-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+        {{css file="css/email.css"}}
+    </style>
+</head>
+<body>
+<style id="media-query" type="text/css" media="screen,print">
+    .new-page{
+        page-break-before: always;
+    }
+    tr, td, th, tbody, tfoot {
+        page-break-inside: avoid !important;
+    }
+    tfoot { display: table-row-group }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .order-status {
+        border: 2px solid #ccc;
+        border-radius: 3px;
+        display: inline-block;
+        margin: 3px 0 0;
+        padding: 2px 10px;
+        text-transform: uppercase;
+        vertical-align: top;
+    }
+
+    .page-title {
+        margin-right: 25px;
+        display: inline-block;
+    }
+    .block-title {
+        font-size: 2.2rem;
+        font-weight: 300;
+        border-bottom: 1px solid #c6c6c6;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+
+    .order-items-inner-container {
+        padding-right: 10px;
+    }
+    .order-items-container {
+        margin-top: -1px;
+        padding: 15px;
+        border: 1px solid #ccc;
+    }
+    .table-order-items {
+        border: none;
+    }
+
+    .table-order-items tfoot {
+        background: #f5f5f5;
+        text-align: right;
+    }
+
+    .table-order-items tfoot th,
+    .table-order-items tfoot td {
+        padding: 5px 10px;
+    }
+
+    .table-order-items thead tr th {
+        border-bottom: 1px solid #ccc;
+        padding: 11px 10px;
+    }
+
+    .table-order-items tr .item-info,
+    .table-order-items tr .item-image {
+        text-align: left;
+    }
+
+    .table-order-items tr .item-qty,
+    .table-order-items tr .item-price {
+        text-align: right;
+        width: 15%;
+    }
+
+    .table-order-items tr .col.item-qty .items-qty {
+        margin: 0;
+        padding: 0;
+        list-style: none none;
+    }
+    .table-order-items tr .col.item-price .cart-price {
+        color: #666;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .table-order-items tr .col {
+        vertical-align: top;
+        padding: 11px 0;
+    }
+    .address-details {
+        overflow-wrap: break-word;
+        width: 50%;
+    }
+
+    td.method-info {
+        width: 50%;
+        vertical-align: top;
+    }
+
+    tfoot.order-totals .grand_total {
+        font-size: 16px;
+    }
+</style>
+<div class="new-page">
+    <div class="header">
+        <img
+            {{if logo_width}}
+            width="{{var logo_width}}"
+            {{else}}
+            width="180"
+            {{/if}}
+
+            {{if logo_height}}
+            height="{{var logo_height}}"
+            {{else}}
+            height="52"
+            {{/if}}
+
+            src="{{var logo_url}}"
+            alt="{{var logo_alt}}"
+            border="0"
+        />
+    </div>
+    <div class="order-intro">
+        <h1 class="page-title">
+            <span class="base">{{trans 'Order <span class="no-link">#%increment_id</span>' increment_id=$order.increment_id |raw}}</span>
+        </h1>
+        <span class="order-status">{{var order.getStatusLabel()}}</span>
+        <p>{{trans 'Placed on <span class="no-link">%created_at</span>' created_at=$order.getCreatedAtFormatted(2) |raw}}</p>
+    </div>
+    <div class="order-information">
+        <h2 class="block-title">
+            <span class="base">{{trans 'Order Information' }}</span>
+        </h2>
+        {{depend order.getEmailCustomerNote()}}
+        <div class="message-info">
+            {{var order.getEmailCustomerNote()|escape|nl2br}}
+        </div>
+        {{/depend}}
+        <table class="order-details">
+            <tr>
+                <td class="address-details">
+                    <h3>{{trans "Billing Info"}}</h3>
+                    <p>{{var formattedBillingAddress|raw}}</p>
+                </td>
+                {{depend order.getIsNotVirtual()}}
+                <td class="address-details">
+                    <h3>{{trans "Shipping Info"}}</h3>
+                    <p>{{var formattedShippingAddress|raw}}</p>
+                </td>
+                {{/depend}}
+            </tr>
+            <tr>
+                <td class="method-info">
+                    <h3>{{trans "Payment Method"}}</h3>
+                    {{var payment_html|raw}}
+                </td>
+                {{depend order.getIsNotVirtual()}}
+                <td class="method-info">
+                    <h3>{{trans "Shipping Method"}}</h3>
+                    <p>{{var order.getShippingDescription()}}</p>
+                </td>
+                {{/depend}}
+            </tr>
+        </table>
+        <div class="order-items-inner-container">
+            <div class="order-items-container">
+                <table class="table-order-items">
+                    <thead>
+                    <tr>
+                        <th class="item-info">
+                            {{trans "Product"}}
+                        </th>
+                        <th class="item-image">
+                            {{trans "Image"}}
+                        </th>
+                        <th class="item-qty">
+                            {{trans "Qty"}}
+                        </th>
+                        <th class="item-price">
+                            {{trans "Price"}}
+                        </th>
+                        <th class="item-price">
+                            {{trans "Subtotal"}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{foreach order.getAllVisibleItems()}}
+                    <tr id="order-item-row-{{var item.getProductId()}}" class="item-parent">
+                        <td class="col item-info" data-th="{{trans 'Product Name'}}">
+                            <div>
+                                {{block class='Potato\Pdf\Block\Adminhtml\Sales\Order\Item\Renderer' name='item.renderer.block.name' area='frontend' template='Potato_Pdf::item.phtml' item=$item}}
+                            </div>
+                            SKU: {{var item.getSku()}}
+                        </td>
+                        <td class="col item-image" data-th="{{trans 'Image'}}">
+                            {{block class='Potato\Pdf\Block\Adminhtml\Sales\Order\Item\Renderer' name='item.renderer.block.image' area='frontend' template='Potato_Pdf::image.phtml' item=$item}}
+                        </td>
+                        <td class="col item-qty" data-th="{{trans 'Quantity'}}">
+                            <ul class="items-qty">
+                                {{depend item.getQtyOrdered()|int}}
+                                <li class="item">
+                                    <span class="title">{{trans 'Ordered:'}}</span>
+                                    <span class="content">{{var item.getQtyOrdered()|int}}</span>
+                                </li>
+                                {{/depend}}
+                                {{depend item.getQtyShipped()|int}}
+                                <li class="item">
+                                    <span class="title">{{trans 'Shipped:'}}</span>
+                                    <span class="content">{{var item.getQtyShipped()|int}}</span>
+                                </li>
+                                {{/depend}}
+                                {{depend item.getQtyCanceled()|int}}
+                                <li class="item">
+                                    <span class="title">{{trans 'Canceled:'}}</span>
+                                    <span class="content">{{var item.getQtyCanceled()|int}}</span>
+                                </li>
+                                {{/depend}}
+                                {{depend item.getQtyRefunded()|int}}
+                                <li class="item">
+                                    <span class="title">{{trans 'Refunded:'}}</span>
+                                    <span class="content">{{var item.getQtyRefunded()|int}}</span>
+                                </li>
+                                {{/depend}}
+                            </ul>
+                        </td>
+                        <td class="col item-price" data-th="{{trans 'Price'}}">
+                                <span class="price-excluding-tax" data-label="{{trans 'Excl. Tax'}}">
+                                    <span class="cart-price">
+                                        {{var order.formatPrice($item.getPrice())|raw}}
+                                    </span>
+                                </span>
+                        </td>
+                        <td class="col item-price" data-th="{{trans 'Subtotal'}}">
+                                <span class="price-excluding-tax" data-label="{{trans 'Excl. Tax'}}">
+                                    <span class="cart-price">
+                                        {{var order.formatPrice($item.getRowTotal())|raw}}
+                                    </span>
+                                </span>
+                        </td>
+                    </tr>
+                    {{/foreach}}
+                    </tbody>
+                    <tfoot class="order-totals">
+                    {{layout handle="po_pdf_sales_order_total" label_properties="colspan='4'" order=$order area="frontend"}}
+                    </tfoot>
+                </table>
+                {{if giftMessage}}
+                <table class="message-gift">
+                    <tr>
+                        <td>
+                            <h3>{{trans 'Gift Message for this Order'}}</h3>
+                            <strong>{{trans 'From:'}}; ?></strong>{{var giftMessage.getSender()}}
+                            <br /><strong>{{trans 'To:'}}</strong> {{var giftMessage.getRecipient()}}
+                            <br /><strong>{{trans 'Message:'}}</strong>
+                            <br />{{var giftMessage.getMessage()}}
+                        </td>
+                    </tr>
+                </table>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+</body>

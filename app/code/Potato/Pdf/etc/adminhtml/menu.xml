@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Potato_Pdf::menu" title="PDF Customizer by PotatoCommerce" translate="title" module="Potato_Pdf" sortOrder="70" parent="Magento_Backend::content" resource="Potato_Pdf::menu"/>
+        <add id="Potato_Pdf::po_pdf_template" title="Templates" translate="title" module="Potato_Pdf" sortOrder="10" parent="Potato_Pdf::menu" action="po_pdf/template" resource="Potato_Pdf::po_pdf_template"/>
+        <add id="Potato_Pdf::po_pdf_setting" title="Settings" translate="title" module="Potato_Pdf" sortOrder="30" parent="Potato_Pdf::menu" action="adminhtml/system_config/edit/section/potato_pdf" resource="Potato_Pdf::po_pdf_setting"/>
+    </menu>
+</config>

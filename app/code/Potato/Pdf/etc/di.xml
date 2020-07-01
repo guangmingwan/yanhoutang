@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Potato\Pdf\Api\TemplateRepositoryInterface" type="Potato\Pdf\Model\ResourceModel\TemplateRepository" />
+    <preference for="Potato\Pdf\Api\Data\TemplateInterface" type="Potato\Pdf\Model\Data\Template" />
+    <preference for="Potato\Pdf\Api\Data\TemplateSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+
+    <!-- rewrite admin print -->
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Invoice\PrintAction" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\Invoice" />
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Creditmemo\PrintAction" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\Creditmemo" />
+    <preference for="Magento\Sales\Controller\Adminhtml\Shipment\PrintAction" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\Shipment" />
+
+    <!-- rewrite admin print massactions -->
+    <preference for="Magento\Sales\Controller\Adminhtml\Invoice\Pdfinvoices" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\MassInvoice" />
+    <preference for="Magento\Sales\Controller\Adminhtml\Creditmemo\Pdfcreditmemos" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\MassCreditmemo" />
+    <preference for="Magento\Sales\Controller\Adminhtml\Shipment\Pdfshipments" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\MassShipment" />
+
+    <!-- rewrite admin order view print massactions -->
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Invoice\Pdfinvoices" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\MassInvoice" />
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Pdfcreditmemos" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\MassCreditmemo" />
+
+    <!-- rewrite admin order print massactions -->
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Pdfinvoices" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\MassOrderInvoice" />
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Pdfcreditmemos" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\MassOrderCreditmemo" />
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Pdfshipments" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\MassOrderShipment" />
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Pdfdocs" type="Potato\Pdf\Controller\Adminhtml\PrintPdf\MassOrderPdf" />
+
+    <!-- rewrite frontend print -->
+    <preference for="Magento\Sales\Controller\Order\PrintCreditmemo" type="Potato\Pdf\Controller\PrintPdf\Creditmemo" />
+    <preference for="Magento\Sales\Controller\Order\PrintInvoice" type="Potato\Pdf\Controller\PrintPdf\Invoice" />
+    <preference for="Magento\Sales\Controller\Order\PrintShipment" type="Potato\Pdf\Controller\PrintPdf\Shipment" />
+    <preference for="Magento\Sales\Controller\Order\PrintAction" type="Potato\Pdf\Controller\PrintPdf\Order" />
+
+    <!-- add print button to order view -->
+    <type name="Magento\Sales\Block\Adminhtml\Order\View">
+        <plugin name="addPrintButton" type="Potato\Pdf\Plugin\AddPrintButton"/>
+    </type>
+
+    <!-- add print mass action to order grid -->
+    <type name="Magento\Ui\Component\MassAction">
+        <plugin name="addPrintMassaction" type="Potato\Pdf\Plugin\AddPrintMassaction"/>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="po_pdf_template_listing_data_source" xsi:type="string">Potato\Pdf\Model\ResourceModel\Template\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- add attachment to new order/invoice/shipment/credit memo emails -->
+    <preference for="\Magento\Framework\Mail\Template\TransportBuilder"
+                type="Potato\Pdf\Model\Email\TransportBuilder"/>
+    <preference for="Magento\Sales\Model\Order\Email\SenderBuilder"
+                type="Potato\Pdf\Model\Email\SenderBuilder"/>
+
+    <preference for="Magento\Sales\Model\Order\Email\Sender\CreditmemoSender"
+                type="Potato\Pdf\Model\Email\CreditmemoSender"/>
+    <preference for="Magento\Sales\Model\Order\Email\Sender\OrderSender"
+                type="Potato\Pdf\Model\Email\OrderSender"/>
+    <preference for="Magento\Sales\Model\Order\Email\Sender\InvoiceSender"
+                type="Potato\Pdf\Model\Email\InvoiceSender"/>
+    <preference for="Magento\Sales\Model\Order\Email\Sender\ShipmentSender"
+                type="Potato\Pdf\Model\Email\ShipmentSender"/>
+
+    <preference for="Potato\Pdf\Api\Data\AttachmentInterface" type="Potato\Pdf\Model\Data\Attachment" />
+</config>

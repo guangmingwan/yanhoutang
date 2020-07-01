@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OSCCheckKlarnaAndButtonBelowOrder">
+        <annotations>
+            <features value="Customize Checkout via admin"/>
+            <stories value="Check Place Order With Klarna via the storefront"/>
+            <title value="Check Place Order with Klarna And Button Below the Order Total on the Checkout"/>
+            <description value="Check Place Order with Klarna And Button Below the Order Total on the Checkout"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="OSC-MFTF-39"/>
+            <group value="OSCCheckExternalPayments"/>
+            <group value="OSCCheckExternalPaymentsKlarna"/>
+        </annotations>
+
+        <before>
+            <!-- Login as admin -->
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <!-- Configuration setting -->
+            <actionGroup ref="AdminConfigurationSettingOSCGeneral" stepKey="ConfigurateGeneralSetting">
+                <argument name="adminSettingOSCGeneral" value="SetOnlyEnableCheckout"/>
+            </actionGroup>
+            <actionGroup ref="AdminConfigurationSettingOSCPlaceButtonDesign" stepKey="ConfiguratePlaceButtonDesignSetting">
+                <argument name="adminSettingOSCPlaceButtonDesign" value="BelowTheOrderTotalAndTurquoise"/>
+            </actionGroup>
+            <!-- Activate Payment Method -->
+            <actionGroup ref="AdminActivateKlarnaPayment" stepKey="ActivateKlarna">
+                <argument name="paymentMethodsAccess" value="paymentMethodCredentialsKlarna"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Return default setting -->
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCGeneral" stepKey="ReturnDefaultGeneralSetting"/>
+            <actionGroup ref="AdminDefaultConfigurationSettingOSCPlaceButtonDesign" stepKey="ReturnDefaultPlaceButtonDesignSetting"/>
+            <actionGroup ref="AdminReturnDefaultSettingKlarnaPayment" stepKey="ReturnDefaultPaymentSetting">
+                <argument name="paymentMethodsAccess" value="paymentMethodCredentialsKlarna"/>
+            </actionGroup>
+            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+        </after>
+
+        <!--Add First Configurable Product to Cart-->
+        <actionGroup ref="AddConfigurableProductToCart" stepKey="AddFirstConfigProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theMenHoodiesChazKangerooHoodie"/>
+            <argument name="size" value="OSCCheckStripeAndButtonBelowOrder.sizeMH01"/>
+            <argument name="color" value="OSCCheckStripeAndButtonBelowOrder.colorMH01"/>
+        </actionGroup>
+
+        <!--Add Second Configurable Product to Cart-->
+        <actionGroup ref="AddConfigurableProductToCart" stepKey="AddSecondConfigProductToCart">
+            <argument name="addProductQty" value="_enterQty1"/>
+            <argument name="products" value="_theMenHoodiesTetonPulloverHoodie"/>
+            <argument name="size" value="OSCCheckKlarnaAndButtonBelowOrder.sizeMH02"/>
+            <argument name="color" value="OSCCheckKlarnaAndButtonBelowOrder.colorMH02"/>
+        </actionGroup>
+
+        <actionGroup ref="GoToOSCAsGuestAndChooseShipping" stepKey="NavigateToOneStepCheckout">
+            <argument name="customer" value="defaultCustomerOSCData"/>
+            <argument name="shippingMethodsOnCheckout" value="FlatRateMethod"/>
+        </actionGroup>
+
+        <!-- Check Payment method -->
+        <actionGroup ref="StorefrontOSCCheckPaymentMethod" stepKey="checkHaveKlarna">
+            <argument name="paymentMethods" value="paymentKlarna"/>
+        </actionGroup>
+
+        <!-- Check totals -->
+        <actionGroup ref="StorefrontOSCCheckTotalsAndShippingPrice" stepKey="checkTotalsAndShipping">
+            <argument name="oneStepCheckoutData" value="OSCCheckKlarnaAndButtonBelowOrder"/>
+        </actionGroup>
+
+        <!-- Place Order -->
+        <actionGroup ref="StorefrontOSCPlaceOrderBelowOrderWithKlarna" stepKey="PlaceOrderWithKlarna"/>
+
+        <!-- Check Payment method in order-->
+        <actionGroup ref="AdminCheckPaymentMethodInLastOrder" stepKey="checkPaymentInAdminOrder">
+            <argument name="paymentMethods" value="paymentKlarna"/>
+        </actionGroup>
+
+        <!-- Check totals in order-->
+        <actionGroup ref="AdminCheckTotalsInLastOrder" stepKey="CheckTotalsInAdminOrder">
+            <argument name="subtotal" value="OSCCheckKlarnaAndButtonBelowOrder.cartSubtotal"/>
+            <argument name="grandTotal" value="OSCCheckKlarnaAndButtonBelowOrder.orderTotal"/>
+        </actionGroup>
+
+    </test>
+</tests>
