@@ -11,6 +11,7 @@ services:
         ports:
         - "8082:80"
         volumes:
+        - ./apache/auth.json:/root/.composer/auth.json
         - ./apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
         - ./php/xdebug.ini:/etc/php/7.2/mods-available/xdebug.ini
         - ../:/var/www/html
