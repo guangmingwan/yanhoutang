@@ -67,13 +67,9 @@
     "version": "2.3.5-p1",
     "minimum-stability": "stable",
     "repositories": {
-        "0": {
+        "packagist": {
             "type": "composer",
-            "url": "https://repo.magento.com/"
-        },
-        "magento": {
-            "type": "composer",
-            "url": "https://repo.magento.com"
+            "url": "https://mirrors.aliyun.com/composer/"
         }
     },
     "extra": {

@@ -2,6 +2,9 @@
 version: "3.6"
  
 # https://docs.docker.com/compose/compose-file/#service-configuration-reference
+volumes: 
+    remote_volumes:
+    remote-projects: 
 services:
     web-yht:
         image: udovicic/echo:apache-php7.2
@@ -9,12 +12,15 @@ services:
         - "mysql5.6:db"
         - "redis"
         ports:
-        - "8082:80"
+        - "80:80"
+        - "443:443"
         volumes:
+        - ../:/data/
+        - ./php/docker.ini:/etc/php/7.2/fpm/conf.d/docker.ini
+        - remote_volumes:/var/www/html/
         - ./apache/auth.json:/root/.composer/auth.json
         - ./apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
         - ./php/xdebug.ini:/etc/php/7.2/mods-available/xdebug.ini
-        - ../:/var/www/html
         environment:
         - TERM=xterm-256color
         - APACHE_RUN_USER=1000
