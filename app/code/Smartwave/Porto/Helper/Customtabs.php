@@ -71,14 +71,14 @@ class Customtabs extends \Magento\Framework\App\Helper\AbstractHelper
             $attr_tabs = unserialize($attr_tabs);
         
         $parents = array();
-        if(count($cms_tabs)>0 || count($attr_tabs)>0) {
+        if(($cms_tabs && count($cms_tabs)>0) || ($attr_tabs && count($attr_tabs)>0)) {
             foreach($product->getCategoryCollection() as $parent_cat) {
                 $parents[] = $parent_cat->getId();
             }
         }
         $store_id = $this->_storeManager->getStore()->getId();
         $custom_tabs = array();
-        if(count($cms_tabs)>0){
+        if($cms_tabs && count($cms_tabs)>0){
             foreach($cms_tabs as $_item) {
                 if($this->checkShowingTab($_item['category_ids'],$parents,$_item['product_skus'],$_sku)){
                     $block_id = $_item['staticblock_id'];
@@ -102,7 +102,7 @@ class Customtabs extends \Magento\Framework\App\Helper\AbstractHelper
                 }
             }
         }
-        if(count($attr_tabs)>0){
+        if($attr_tabs && count($attr_tabs)>0){
             foreach($attr_tabs as $_item) {
                 if($this->checkShowingTab($_item['category_ids'],$parents,$_item['product_skus'],$_sku)){
                     $attr_code = $_item['attribute_code'];

@@ -632,3 +632,6 @@ input.l-tcb {
 .no-active-category a span {
     color: #aaa !important;
 }
+.menu-wrapper .logo .logo-img {
+	    width: 8.5rem !important;
+    }
